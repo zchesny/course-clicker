@@ -1,5 +1,9 @@
-<%= form_for(@teacher) %>
-    <%= f.text_field :name, placeholder: "Enter Name Here" %>
-    <%= f.password_field :password, placehodler: "Enter Password Here" %>
+<%= form_for(@user) do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Enter Name Here" %><br>
+
+    <%= f.label :password %>
+    <%= f.password_field :password %><br>
+
     <%= f.submit "Sign Up"%>
 <% end %>

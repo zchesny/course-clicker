@@ -5,5 +5,5 @@ class Student < ApplicationRecord
     has_many :attendances 
 
     # courses attended? 
-    has_secure_password 
+    has_secure_password
 end

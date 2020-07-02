@@ -1,14 +1,24 @@
 class TeachersController < ApplicationController
-    before_action :set_teacher, only: [:show, :edit, :update, :destroy]
+    before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     def index 
     end 
 
     def new 
-        @teacher = Teacher.new 
+        @user = Teacher.new 
     end 
 
     def create 
+        @user = Teacher.new(teacher_params)
+
+        if @user.save
+            # Log them in 
+            session[:user_id] = @user.id
+            session[:role] = "teacher"
+            redirect_to teacher_path(@user)
+        else 
+            render :new 
+        end 
     end 
 
     def show 
@@ -25,8 +35,8 @@ class TeachersController < ApplicationController
 
     private 
 
-    def set_teacher 
-        @teacher = Teacher.find(params[:id])
+    def set_user 
+        @user = Teacher.find(params[:id])
     end 
 
     def teacher_params 
