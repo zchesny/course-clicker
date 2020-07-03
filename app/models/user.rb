@@ -13,15 +13,19 @@ class User < ApplicationRecord
 
     include Schedulable::InstanceMethods
 
-    def student? 
-        role.downcase.include?('student')
+    def role?(role)
+        self.role.downcase.include?(role)
     end 
 
-    def teacher? 
-        role.downcase.include?('teacher')
-    end 
+    # def student? 
+    #     role.downcase.include?('student')
+    # end 
 
-    def admin? 
-        role.downcase.include?('admin')
-    end 
+    # def teacher? 
+    #     role.downcase.include?('teacher')
+    # end 
+
+    # def admin? 
+    #     role.downcase.include?('admin')
+    # end 
 end

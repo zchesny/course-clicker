@@ -9,26 +9,6 @@ class ApplicationController < ActionController::Base
     helper_method :logged_in?	
     helper_method :current_user	
 
-    def authentication_required 	
-      if !logged_in?	
-        redirect_to root_path 	
-      end 	
-    end 	
-
-    def admin?	
-        session[:role].include?("admin") if session[:role]	
-    end 	
-
-    def teacher? 	
-        # !!session[:teacher]	
-        session[:role].include?("teacher") if session[:role]	
-    end	
-
-    def student?	
-        # !!session[:student]	
-        session[:role].include?("student") if session[:role]	
-    end	
-
     def logged_in?	
         # !!session[:user_id]	
         !!current_user 	
@@ -41,22 +21,24 @@ class ApplicationController < ActionController::Base
     end 	
 
     def require_login	
-      redirect_to root_path if !logged_in?	
+        redirect_to root_path if !logged_in?	
     end 	
 
-    def require_student 	
-      redirect_to user_path(current_user) if !current_user.student?	
-    end 	
+    def require_role(role)
+        require_login
+        redirect_to user_path(current_user) if !current_user.role?(role)	
+    end 
 
-    def require_teacher	
-    end 	
+    # def require_student 	
+    #     redirect_to user_path(current_user) if !current_user.student?	
+    # end 	
 
-    def require_admin 	
-    end 	
+    # def require_teacher	
+    #     redirect_to user_path(current_user) if !current_user.teacher?	
+    # end 	
 
-    def admin_required	
-      if !current_user.admin? 	
-        redirect_to root_path 	
-      end 	
-    end 	
+    # def require_admin 	
+    #     redirect_to user_path(current_user) if !current_user.admin?	
+    # end 	
+	
 end

@@ -1,11 +1,22 @@
 class Course < ApplicationRecord
-    has_many :enrollments 
-    has_many :students, through: :enrollments 
+    has_many :user_courses
+    has_many :users, through: :user_courses 
 
-    has_many :teacher_courses 
-    has_many :teachers, through: :teacher_courses 
+    # has_many :enrollments 
+    # has_many :students, through: :enrollments 
+
+    # has_many :teacher_courses 
+    # has_many :teachers, through: :teacher_courses 
 
     has_many :attendances
+
+    def get_users(role) 
+        users.select{|user| user.role?(role)}
+    end 
+
+    def get_users_count(role)
+        get_users(role).count
+    end 
 
     def weekly_schedule_attribute=(weekly_schedule_attribute)
         self.weekly_schedule = weekly_schedule_attribute.join('/')

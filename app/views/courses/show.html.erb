@@ -4,7 +4,7 @@
 <p><%= @course.description %></p>
 
 <h3>Enrollment: </h3>
-<p> <%= @course.students.count %> / <%= @course.capacity %> students enrolled </p>
+<p> <%= @course.get_users_count('student') %> / <%= @course.capacity %> student(s) enrolled </p>
 
 <h3>Location:</h3> 
 <p><%= @course.location %></p>
@@ -15,5 +15,20 @@
 <h3>Time:</h3> 
 <p><%= @course.time %> (<%= @course.duration %> minutes)</p>
 
+<h3>Teachers: </h3>
+<ol>
+    <% @course.get_users('teacher').each do |teacher| %>
+       <li><%= teacher.name %></li>
+    <% end %>
+</ol>
+
+<h3>Students: </h3>
+<ol>
+    <% @course.get_users('student').each do |student| %>
+       <li><%= student.name %></li>
+    <% end %>
+</ol>
+
 <%= params.inspect %>
+
 

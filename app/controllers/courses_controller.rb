@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
     before_action :set_course, only: [:show, :edit, :update, :destroy]
+    before_action :require_login, only: [:new, :create, :show, :edit, :update, :destroy]
 
     def index 
     end 
@@ -12,6 +13,7 @@ class CoursesController < ApplicationController
     def create 
 
         @course = current_user.courses.build(course_params)
+        @course.user_ids = [current_user.id]
         @course.weekly_schedule_attribute = params[:course][:weekly_schedule]
 
         if @course.save
