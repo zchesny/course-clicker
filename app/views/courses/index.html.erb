@@ -1,0 +1,19 @@
+<h2>Course Catalog</h2>
+<table>
+    <tr>
+        <th>Course Name</th>
+        <th>Schedule</th>
+        <th>Time</th>
+        <th>Teachers</th>
+        <th>Enrollment</th>
+    </tr>
+    <% Course.sort_by_time(Course.all).each do |course| %>
+        <tr>
+            <td><%= link_to course.name, course_path(course) %></td>
+            <td><%= course.weekly_schedule %></td>
+            <td><%= course.time %></td>
+            <td><%= course.teacher_list %></td>
+            <td>(<%= course.students.count %>/<%= course.capacity %> students)</td>
+        </tr>
+    <% end %>
+</table>

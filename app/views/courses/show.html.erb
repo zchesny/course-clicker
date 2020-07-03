@@ -1,0 +1,19 @@
+<h2><%= @course.name %></h2>
+
+<h3>Description: </h3>
+<p><%= @course.description %></p>
+
+<h3>Enrollment: </h3>
+<p> <%= @course.students.count %> / <%= @course.capacity %> students enrolled </p>
+
+<h3>Location:</h3> 
+<p><%= @course.location %></p>
+
+<h3>Schedule:</h3> 
+<p><%= @course.weekly_schedule %></p>
+
+<h3>Time:</h3> 
+<p><%= @course.time %> (<%= @course.duration %> minutes)</p>
+
+<%= params.inspect %>
+

@@ -1,0 +1,42 @@
+<% if @course.errors.any? %>
+  <div class="error_explanation">
+    <h2>
+      <%= pluralize(@course.errors.count, "error") %>
+      prohibited this course from being saved:
+    </h2>
+ 
+    <ul>
+    <% @course.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for(@course) do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Enter Course Name Here", required: true %><br>
+
+    <%= f.label :description %>
+    <%= f.text_area :description, placeholder: "Enter Description Here", required: true %><br>
+
+    <%= f.label :capacity %>
+    <%= f.number_field :capacity, placeholder: "Enter Capacity Here", required: true %><br>
+
+    <%= f.label :location %>
+    <%= f.text_area :location, placeholder: "Enter Location Here", required: true %><br>
+
+    <%= f.label :weekly_schedule %><br>
+
+    <% ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].each do |day| %>
+      <%= f.check_box :weekly_schedule, {multiple: true}, day, nil %><%= day %>
+    <% end %><br>
+
+    <%= f.label :military_start_time, "Start Time" %>
+    <%= f.time_field :military_start_time %><br>
+
+    <%= f.label :duration %>
+    <%= f.select(:duration, [['1 hr', 60], ['30 min', 30], ['1 hr 30 min', 90], ['2 hr', 120]])%><br>
+
+    <%= f.submit %>
+<% end %>
