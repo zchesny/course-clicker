@@ -21,16 +21,16 @@
     <div class="wrapper">
       <h1>Course Clicker</h1>
       <table>
-        <th><a href="/courses">Course Catalog</a></th>
+        <th><%= link_to "Course Catalog", courses_path %></th>
         <% if !logged_in? %>
-          <th><a href="/">Home</a></th>
+          <th><%= link_to "Home", root_path %><</th>
         <% elsif teacher? %>
-          <th><a href="/courses/new">Create Course</a></th>
-          <th><a href="/teachers/home">Home</a></th>
+          <th><%= link_to "Create Course", new_course_path %></th>
+          <th><%= link_to "Home", teacher_path(current_user) %></th>
           <th><a href="/logout">Logout</a></th>
         <% elsif student? %>
           <th><a href="/courses/enroll">Enroll</a></th>
-          <th><a href="/students/home">Home</a></th>
+          <th><%= link_to "Home", student_path(current_user) %></th>
           <th><a href="/logout">Logout</a></th>
         <% end %>
       </table>
