@@ -9,7 +9,7 @@ class TeachersController < ApplicationController
     end 
 
     def create 
-        @user = Teacher.new(teacher_params)
+        @user = Teacher.new(user_params)
 
         if @user.save
             # Log them in 
@@ -39,7 +39,7 @@ class TeachersController < ApplicationController
         @user = Teacher.find(params[:id])
     end 
 
-    def teacher_params 
+    def user_params 
         params.require(:teacher).permit(:name, :password)
     end 
 
