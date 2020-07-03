@@ -6,4 +6,6 @@ class Student < ApplicationRecord
 
     # courses attended? 
     has_secure_password
+
+    include Schedulable::InstanceMethods
 end

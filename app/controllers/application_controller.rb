@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
     # Methods you build in controllers do not permeate
     # to action view unless you define as a helper 
+    helper_method :admin? 
+    helper_method :teacher?
+    helper_method :student?
+    helper_method :logged_in?
     helper_method :current_user
   
     def authentication_required 

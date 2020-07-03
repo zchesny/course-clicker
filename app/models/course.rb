@@ -24,6 +24,10 @@ class Course < ApplicationRecord
         "#{self.start_time} - #{self.end_time}"
     end 
 
+    def scheduled_on?(day)
+        !self.schedule_days.scan(day).empty?
+    end 
+
     def teacher_list
         self.teachers.collect{|teacher| teacher.name}.join(', ')
     end
