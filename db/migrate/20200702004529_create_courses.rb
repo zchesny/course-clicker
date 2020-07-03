@@ -7,10 +7,8 @@ class CreateCourses < ActiveRecord::Migration[6.0]
       t.integer :capacity
       t.string :location
       t.string :weekly_schedule
-      t.string :military_start_time
-      t.string :start_time
+      t.time :military_start_time
       t.integer :duration
-      t.string :end_time
 
       t.timestamps
     end

@@ -29,10 +29,8 @@ ActiveRecord::Schema.define(version: 2020_07_02_005346) do
     t.integer "capacity"
     t.string "location"
     t.string "weekly_schedule"
-    t.string "military_start_time"
-    t.string "start_time"
+    t.time "military_start_time"
     t.integer "duration"
-    t.string "end_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
