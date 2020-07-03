@@ -1,0 +1,14 @@
+<h2>Login</h2>
+
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info error_explanation">
+    <%= msg %>
+  </div>
+<% end %>
+
+<%= form_tag(sessions_path) do %>
+    Role:  <%= select_tag :role, options_for_select(['Teacher', 'Admin', 'Student']) %><br>
+    Name: <%= text_field_tag :name, nil, {required: true} %><br>
+    Password: <%= password_field_tag :password, '', required: true %><br>
+    <%= submit_tag "Log In" %>
+<% end %>

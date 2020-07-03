@@ -23,7 +23,7 @@
       <table>
         <th><%= link_to "Course Catalog", courses_path %></th>
         <% if !logged_in? %>
-          <th><%= link_to "Home", root_path %><</th>
+          <th><%= link_to "Home", root_path %></th>
         <% elsif teacher? %>
           <th><%= link_to "Create Course", new_course_path %></th>
           <th><%= link_to "Home", teacher_path(current_user) %></th>
