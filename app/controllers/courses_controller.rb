@@ -30,6 +30,11 @@ class CoursesController < ApplicationController
     end 
 
     def update 
+        if @course.update(course_params)
+            redirect_to course_path(@course)
+        else 
+            render :edit 
+        end 
     end 
 
     def destroy 
@@ -50,7 +55,8 @@ class CoursesController < ApplicationController
             :military_start_time,
             :start_time,
             :duration,
-            :end_time 
+            :end_time,
+            user_ids: []
         )
     end 
 end

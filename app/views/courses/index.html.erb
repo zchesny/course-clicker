@@ -12,8 +12,8 @@
             <td><%= link_to course.name, course_path(course) %></td>
             <td><%= course.weekly_schedule %></td>
             <td><%= course.time %></td>
-            <td><%= course.teacher_list %></td>
-            <td>(<%= course.students.count %>/<%= course.capacity %> students)</td>
+            <td><%= course.role_list('teacher') %></td>
+            <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
         </tr>
     <% end %>
 </table>

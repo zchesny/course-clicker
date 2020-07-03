@@ -17,15 +17,8 @@ class User < ApplicationRecord
         self.role.downcase.include?(role)
     end 
 
-    # def student? 
-    #     role.downcase.include?('student')
-    # end 
+    def self.all_users(role)
+        self.all.select{|user| user.role?(role)}
+    end 
 
-    # def teacher? 
-    #     role.downcase.include?('teacher')
-    # end 
-
-    # def admin? 
-    #     role.downcase.include?('admin')
-    # end 
 end

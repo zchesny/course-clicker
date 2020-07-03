@@ -39,8 +39,8 @@ class Course < ApplicationRecord
         !self.schedule_days.scan(day).empty?
     end 
 
-    def teacher_list
-        self.teachers.collect{|teacher| teacher.name}.join(', ')
+    def role_list(role)
+        self.get_users(role).collect{|user| user.name}.join(', ')
     end
 
     def self.sort_by_time(courses)

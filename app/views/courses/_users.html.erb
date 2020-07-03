@@ -1,0 +1,18 @@
+
+
+<%= form_for(@course) do |f| %>
+    
+    <h4>Update Teachers</h4>
+        <% User.all_users('teacher').each do |teacher| %>
+            <%= f.check_box :user_ids, {multiple: true}, teacher.id, nil %><%= teacher.name %><br>
+        <% end %>
+
+    <br>
+    <h4>Update Students</h4>
+        <% User.all_users('student').each do |student| %>
+            <%= f.check_box :user_ids, {multiple: true}, student.id, nil %><%= student.name %><br>
+        <% end %>
+
+    <br>
+    <%= f.submit "Update Users" %>
+<% end %>

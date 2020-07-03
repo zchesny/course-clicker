@@ -16,18 +16,14 @@
 <p><%= @course.time %> (<%= @course.duration %> minutes)</p>
 
 <h3>Teachers: </h3>
-<ol>
-    <% @course.get_users('teacher').each do |teacher| %>
-       <li><%= teacher.name %></li>
-    <% end %>
-</ol>
+    <ol><% @course.get_users('teacher').each do |teacher| %>
+        <li><%= teacher.name %></li>
+    <% end %></ol>
 
 <h3>Students: </h3>
-<ol>
-    <% @course.get_users('student').each do |student| %>
-       <li><%= student.name %></li>
-    <% end %>
-</ol>
+    <ol><% @course.get_users('student').each do |student| %>
+        <li><%= student.name %></li>
+    <% end %></ol>
 
 <%= params.inspect %>
 
