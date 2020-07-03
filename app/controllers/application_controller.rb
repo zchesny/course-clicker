@@ -37,19 +37,23 @@ class ApplicationController < ActionController::Base
     def current_user 
       # the first time, you fire sql
       # subsequent times it just looks to see if @current_user is already set 
-        # @current_user ||= User.find(session[:user_id]) if session[:user_id]
-        if session[:user_id]
-            # FIXME: separate admin class? 
-            if admin? 
-                @current_user ||= Teacher.find(session[:user_id])
-            elsif teacher? 
-                @current_user ||= Teacher.find(session[:user_id])
-            elsif student?
-                @current_user ||= Student.find(session[:user_id])
-            end 
-        end
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
     end 
-  
+
+    def require_login
+      redirect_to root_path if !logged_in?
+    end 
+
+    def require_student 
+      redirect_to user_path(current_user) if !current_user.student?
+    end 
+
+    def require_teacher
+    end 
+
+    def require_admin 
+    end 
+
     def admin_required
       if !current_user.admin? 
         redirect_to root_path 

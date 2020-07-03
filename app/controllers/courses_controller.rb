@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
 
     def create 
 
-        @course = Course.new(course_params)
+        @course = current_user.courses.build(course_params)
         @course.weekly_schedule_attribute = params[:course][:weekly_schedule]
 
         if @course.save

@@ -10,14 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_02_005346) do
+ActiveRecord::Schema.define(version: 2020_07_03_171639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "admins", force: :cascade do |t|
+    t.string "name"
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "attendances", force: :cascade do |t|
     t.integer "course_id"
-    t.integer "student_id"
+    t.integer "user_id"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -63,12 +70,17 @@ ActiveRecord::Schema.define(version: 2020_07_02_005346) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "user_courses", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "course_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
-    t.boolean "admin", default: false
-    t.boolean "teacher", default: false
-    t.boolean "student", default: false
+    t.string "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
