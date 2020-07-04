@@ -1,3 +1,7 @@
-<h2>Sign Up</h2>
+<% if !logged_in? %>
+    <h2>Sign Up</h2>
+<% else %>
+    <h2>Register a New User</h2>
+<% end %>
 
 <%= render 'form' %>

@@ -1,84 +1,100 @@
 <h2>Welcome, <%= current_user.name %>! [<%= current_user.role %>] </h2>
 
-<h3>Today's Schedule (<%= current_user.get_today %>):</h3>
-    <% Course.sort_by_time(current_user.todays_schedule).each do |course| %>
-        [<%= course.time %>]: <%= link_to course.name, course_path(course) %><br>
-    <% end %>
+<% if !current_user.role?('admin') %>
 
-<br>
-<h3>Weekly Schedule:</h3>
-  <table>
-    <tr>
-      <th>Mon</th>
-      <th>Tue</th>
-      <th>Wed</th>
-      <th>Thu</th>
-      <th>Fri</th>
-      <th>Sat</th>
-      <th>Sun</th>
-    </tr>
-    <% current_user.courses.each do |course| %>
-    <tr>
-        <% if  course.scheduled_on?("Mon") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
+    <h3>Today's Schedule (<%= current_user.get_today %>):</h3>
+        <% Course.sort_by_time(current_user.todays_schedule).each do |course| %>
+            [<%= course.time %>]: <%= link_to course.name, course_path(course) %><br>
         <% end %>
-        <% if  course.scheduled_on?("Tue") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
-        <% end %>
-        <% if  course.scheduled_on?("Wed") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
-        <% end %>
-        <% if  course.scheduled_on?("Thu") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
-        <% end %>
-        <% if  course.scheduled_on?("Fri") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
-        <% end %>
-        <% if  course.scheduled_on?("Sat") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
-        <% end %>
-        <% if  course.scheduled_on?("Sun") %>
-            <td><%= course.name %></td>
-            <% else %>
-            <td></td>
-        <% end %>
-    </tr>
-     <% end %>
-  </table>
 
-<br>
-<h3>Your Courses:</h3>
+    <br>
+    <h3>Weekly Schedule:</h3>
     <table>
         <tr>
-            <th>Course Name</th>
-            <th>Schedule</th>
-            <th>Time</th>
-            <th>Teachers</th>
-            <th>Enrollment</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+        <th>Sun</th>
         </tr>
-        <% Course.sort_by_time(current_user.courses).each do |course| %>
-            <tr>
-                <td><%= link_to course.name, course_path(course) %></a></td>
-                <td><%= course.weekly_schedule %></td>
-                <td><%= course.time %></td>
-                <td><%= course.role_list('teacher') %></td>
-                <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
-            </tr>
+        <% current_user.courses.each do |course| %>
+        <tr>
+            <% if  course.scheduled_on?("Mon") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+            <% if  course.scheduled_on?("Tue") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+            <% if  course.scheduled_on?("Wed") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+            <% if  course.scheduled_on?("Thu") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+            <% if  course.scheduled_on?("Fri") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+            <% if  course.scheduled_on?("Sat") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+            <% if  course.scheduled_on?("Sun") %>
+                <td><%= course.name %></td>
+                <% else %>
+                <td></td>
+            <% end %>
+        </tr>
         <% end %>
     </table>
 
+    <br>
+    <h3>Your Courses:</h3>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Schedule</th>
+                <th>Time</th>
+                <th>Teachers</th>
+                <th>Enrollment</th>
+            </tr>
+            <% Course.sort_by_time(current_user.courses).each do |course| %>
+                <tr>
+                    <td><%= link_to course.name, course_path(course) %></a></td>
+                    <td><%= course.weekly_schedule %></td>
+                    <td><%= course.time %></td>
+                    <td><%= course.role_list('teacher') %></td>
+                    <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
+                </tr>
+            <% end %>
+        </table>
+<% else %>
+    <table>
+            <tr>
+                <th>Users</th>
+                <th>Courses</th>
+                <th>Attendance</th>
+            </tr>
+            <tr>
+                <td><%= link_to "Manage Users", users_path %> <br> <%= link_to "Create User", new_user_path %></td>
+                <td><%= link_to "Manage Courses", courses_path %> <br> <%= link_to "Create Course", new_course_path %></td>
+                <td><%= link_to "Manage Attendance", attendances_path %> <br> <%= link_to "Take Attendance", new_attendance_path %></td>
+            </tr>
+        </table>
+
+<% end %>
 
 
 

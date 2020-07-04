@@ -34,6 +34,11 @@ class UsersController < ApplicationController
     end 
 
     def destroy 
+        # todo: logout if a user is deleting themselves (redirect depending on role)
+        # if student or teacher, logout and redirect else users_path (admiN)
+        # todo: redirect to root_path (unless admin, then redirect to users_path)
+        @user.destroy
+        redirect_to users_path, notice: "#{@user.name} was successfully deleted."
     end 
 
     private 
