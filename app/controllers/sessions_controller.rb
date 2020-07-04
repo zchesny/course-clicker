@@ -4,15 +4,6 @@ class SessionsController < ApplicationController
     end 
 
     def create 
-        # case params[:role]
-        # when 'Admin'
-        #     user = Admin.find_by(name: params[:name])
-        # when 'Teacher'
-        #     user = Teacher.find_by(name: params[:name])
-        # when 'Student'
-        #     user = Student.find_by(name: params[:name])
-        # else 
-        # end 
         user = User.find_by(name: params[:name])
         if user && user.authenticate(params[:password])
             session[:user_id] = user.id

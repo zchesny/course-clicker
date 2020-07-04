@@ -28,17 +28,5 @@ class ApplicationController < ActionController::Base
         require_login
         redirect_to user_path(current_user) if !current_user.role?(role)	
     end 
-
-    # def require_student 	
-    #     redirect_to user_path(current_user) if !current_user.student?	
-    # end 	
-
-    # def require_teacher	
-    #     redirect_to user_path(current_user) if !current_user.teacher?	
-    # end 	
-
-    # def require_admin 	
-    #     redirect_to user_path(current_user) if !current_user.admin?	
-    # end 	
 	
 end

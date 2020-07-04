@@ -1,4 +1,9 @@
 <h2>Course Catalog</h2>
+
+<div class="alert alert-info error_explanation">
+  <%= flash[:notice] %>
+</div>
+
 <table>
     <tr>
         <th>Course Name</th>
@@ -6,6 +11,9 @@
         <th>Time</th>
         <th>Teachers</th>
         <th>Enrollment</th>
+        <% if current_user.role?('admin') %>
+            <th>Options</th>
+        <% end %>
     </tr>
     <% Course.sort_by_time(Course.all).each do |course| %>
         <tr>
@@ -14,6 +22,12 @@
             <td><%= course.time %></td>
             <td><%= course.role_list('teacher') %></td>
             <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
+            <% if current_user.role?('admin') %>
+                <td>
+                    <%= link_to 'Edit', edit_course_path(course) %> | 
+                    <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                </td>
+            <% end %>
         </tr>
     <% end %>
 </table>
