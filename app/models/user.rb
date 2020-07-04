@@ -17,8 +17,16 @@ class User < ApplicationRecord
         self.role.downcase.include?(role)
     end 
 
+    def course_list 
+        self.courses.collect{|course| course.name}.join(', ')
+    end 
+
     def self.all_users(role)
         self.all.select{|user| user.role?(role)}
+    end 
+
+    def self.sort_by_name
+        self.all.sort_by{|u| u.name}
     end 
 
 end
