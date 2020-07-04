@@ -1,10 +1,8 @@
-<h2>Welcome, <%= current_user.name %>!</h2>
+<h2>Welcome, <%= current_user.name %>! [<%= current_user.role %>] </h2>
 
 <h3>Today's Schedule (<%= current_user.get_today %>):</h3>
     <% Course.sort_by_time(current_user.todays_schedule).each do |course| %>
-        [<%= course.time %>]: 
-        <a href="../courses/<%= course.slug %>"><%= course.name %></a>
-        <br>
+        [<%= course.time %>]: <%= link_to course.name, course_path(course) %><br>
     <% end %>
 
 <br>
@@ -16,6 +14,8 @@
       <th>Wed</th>
       <th>Thu</th>
       <th>Fri</th>
+      <th>Sat</th>
+      <th>Sun</th>
     </tr>
     <% current_user.courses.each do |course| %>
     <tr>
@@ -44,6 +44,16 @@
             <% else %>
             <td></td>
         <% end %>
+        <% if  course.scheduled_on?("Sat") %>
+            <td><%= course.name %></td>
+            <% else %>
+            <td></td>
+        <% end %>
+        <% if  course.scheduled_on?("Sun") %>
+            <td><%= course.name %></td>
+            <% else %>
+            <td></td>
+        <% end %>
     </tr>
      <% end %>
   </table>
@@ -60,11 +70,11 @@
         </tr>
         <% Course.sort_by_time(current_user.courses).each do |course| %>
             <tr>
-                <td><a href="../courses/<%= course.slug %>"><%= course.name %></a></td>
-                <td><%= course.schedule_days %></td>
+                <td><%= link_to course.name, course_path(course) %></a></td>
+                <td><%= course.weekly_schedule %></td>
                 <td><%= course.time %></td>
-                <td><%= course.teacher_list %></td>
-                <td>(<%= course.students.count %>/<%= course.capacity %> students)</td>
+                <td><%= course.role_list('teacher') %></td>
+                <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
             </tr>
         <% end %>
     </table>

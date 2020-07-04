@@ -26,12 +26,12 @@
           <th><%= link_to "Home", root_path %></th>
         <% elsif current_user.role?('teacher') %>
           <th><%= link_to "Create Course", new_course_path %></th>
-          <th><%= link_to "Home", teacher_path(current_user) %></th>
-          <th><a href="/logout">Logout</a></th>
+          <th><%= link_to "Home", user_path(current_user) %></th>
+          <th><%= render 'sessions/logout' %></th>
         <% elsif current_user.role?('student') %>
           <th><a href="/courses/enroll">Enroll</a></th>
-          <th><%= link_to "Home", student_path(current_user) %></th>
-          <th><a href="/logout">Logout</a></th>
+          <th><%= link_to "Home", user_path(current_user) %></th>
+          <th><%= render 'sessions/logout' %></th>
         <% end %>
       </table>
 

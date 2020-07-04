@@ -1,0 +1,14 @@
+<h2>Login</h2>
+
+<div class="alert alert-info error_explanation">
+  <%= flash[:notice] %>
+</div>
+
+<%= form_tag(sessions_path) do %>
+    Name: <%= text_field_tag :name, flash[:alert], {required: true} %><br>
+    Password: <%= password_field_tag :password, '', required: true %><br>
+    <%= submit_tag "Login" %>
+<% end %>
+
+<br>
+<p>Don't have an account? <%= link_to "Create an Account", new_user_path %></p>

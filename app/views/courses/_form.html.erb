@@ -14,6 +14,9 @@
 <% end %>
 
 <%= form_for(@course) do |f| %>
+    <h3 style="float: left">Course Logistics - </h3>
+    <h3 style="font-weight: normal">Please fill out all fields</h3>
+
     <%= f.label :name, "Name:" %>
     <%= f.text_field :name, placeholder: "Enter Course Name Here", required: true %><br>
 
@@ -36,7 +39,25 @@
     <%= f.time_field :military_start_time %>
 
     <%= f.label :duration, "Duration:" %>
-    <%= f.select(:duration, [['1 hr', 60], ['30 min', 30], ['1 hr 30 min', 90], ['2 hr', 120]])%><br>
+    <%= f.select(:duration, [['1 hr', 60], ['30 min', 30], ['1 hr 30 min', 90], ['2 hr', 120]])%><br><br>
+
+    <h3 style="float: left">Teachers - </h3>
+    <h3 style="font-weight: normal"> You may optionally add other teachers now or you can do so at a later time</h3>
+        <% User.all_users('teacher').each do |teacher| %>
+            <% if teacher.id == current_user.id %>
+              <%= f.check_box :user_ids, {multiple: true, checked: true}, teacher.id, nil %><%= teacher.name %> (You) <br>
+            <% else %>
+              <%= f.check_box :user_ids, {multiple: true}, teacher.id, nil %><%= teacher.name %><br>
+            <% end %>
+        <% end %>
+    <br>
+
+    <h3 style="float: left">Students - </h3>
+    <h3 style="font-weight: normal"> You may optionally enroll students now or you can do so at a later time</h3>
+        <% User.all_users('student').each do |student| %>
+            <%= f.check_box :user_ids, {multiple: true}, student.id, nil %><%= student.name %><br>
+        <% end %>
+    <br>
 
     <%= f.submit %>
 <% end %>

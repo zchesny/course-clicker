@@ -1,11 +1,1 @@
-<h2>Login</h2>
-
-<div class="alert alert-info error_explanation">
-  <%= flash[:notice] %>
-</div>
-
-<%= form_tag(sessions_path) do %>
-    Name: <%= text_field_tag :name, flash[:alert], {required: true} %><br>
-    Password: <%= password_field_tag :password, '', required: true %><br>
-    <%= submit_tag "Log In" %>
-<% end %>
+<%= render 'login' %>
