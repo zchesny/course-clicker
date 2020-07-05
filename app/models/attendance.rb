@@ -16,14 +16,17 @@ class Attendance < ApplicationRecord
         self.all.select{|attendance| attendance.user_ids.include?(user_id)}
     end 
 
+    # fixme: breaks if nil
     def set_absentees(attendee_ids)
         all_student_ids = course.get_user_ids('student')
         self.absentee_ids = all_student_ids - attendee_ids
     end 
 
-    # def absent_students
-    #     all_students = course.get_user_ids('student')
-    #     present_students = users
-    #     absent_students = all_students - present_students 
-    # end 
+    def attendee_list
+        self.attendees.collect{|attendee| attendee.name}.join(', ')
+    end 
+
+    def absentee_list
+        self.absentees.collect{|absentee| absentee.name}.join(', ')
+    end 
 end

@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-    before_action :set_course, only: [:show, :edit, :update, :destroy]
+    #  before_action :set_course, only: [:show, :edit, :update, :destroy]
     before_action :require_login, only: [:new, :create, :show, :edit, :update, :destroy]
 
     def index 
@@ -29,13 +29,21 @@ class AttendancesController < ApplicationController
         @attendance.set_absentees(@attendance.attendee_ids)
 
         if @attendance.save
-            redirect_to course_attendances_path(@attendance.course), notice: "Attendance for #{@attendance.course_id} on #{@attendance.date} was successfully taken."
+            redirect_to course_attendances_path(@attendance.course), notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully taken."
         else 
             render :new 
         end 
     end 
 
     def show 
+        @attendance = Attendance.find(params[:id])
+        if params[:course_id]
+        # course attendance index 
+            @record = Course.find(params[:course_id])
+        # student attendance index 
+        elsif params[:user_id]
+            @record = User.find(params[:user_id])
+        end 
     end 
 
     def edit 

@@ -29,7 +29,8 @@
 <% if (current_user.role?('teacher') && current_user.courses.include?(@course)) || (current_user.role?('admin')) %>
     <table>
         <tr>
-
+            <td><%= link_to 'Take Attendance', new_course_attendance_path(@course) %></td>
+            <td><%= link_to 'View Attendance', course_attendances_path(@course) %></td>
             <td><%= link_to 'Edit', edit_course_path(@course) %></td>
             <td><%= link_to 'Delete', @course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
             <td><%= link_to 'Back', courses_path %></td>

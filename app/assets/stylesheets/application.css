@@ -162,4 +162,12 @@
   .error_explanation {
     color: red; 
   }
+
+  .present {
+    color: green; 
+  }
+
+  .absent {
+    color: red; 
+  }
   

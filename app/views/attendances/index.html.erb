@@ -6,17 +6,37 @@
     <% end %>
 </h2>
 
-<% @attendances.each do |attendance| %>
-    <h3>Record for <%= attendance.course.name %> on <%= format_date(attendance.date) %></h3>
-    <h4 class="present">Present</h4>
-    <ol><% attendance.attendees.each do |student| %>
-        <li><%= student.name %></li>
-    <% end %></ol>
-    <h4 class="absent">Absent</h4>
-    <ol><% attendance.absentees.each do |student| %>
-        <li><%= student.name %></li>
-    <% end %></ol>
 
-<% end %>
+<div class="alert alert-info error_explanation">
+  <%= flash[:notice] %>
+</div>
+
+
+<table>
+    <tr>
+        <th>Course</th>
+        <th>Date</th>
+        <th>Present</th>
+        <th>Absent</th>
+        <th>Options</th>
+    </tr>
+    <% @attendances.each do |attendance| %>
+        <tr>
+            <td><%= attendance.course.name %></td>
+            <td><%= format_date(attendance.date) %></td>
+            <td><%= attendance.attendee_list %></td>
+            <td><%= attendance.absentee_list %></td>
+            <td>
+                <%= link_to 'View', course_attendance_path(attendance.course, attendance) %> |
+                <%= link_to 'Edit', edit_course_attendance_path(attendance.course, attendance) %> | 
+                <%= link_to 'Delete', attendance, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+        </tr>
+    <% end %>
+</table>
+
+
+
+
 
 
