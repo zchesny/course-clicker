@@ -2,7 +2,7 @@
     <% if @record.class != String %>
         <%= @record.name %>
     <% else %>
-        All Courses
+        <%= @record %>
     <% end %>
 </h2>
 
@@ -10,6 +10,23 @@
 <div class="alert alert-info error_explanation">
   <%= flash[:notice] %>
 </div>
+
+<% if @record == "All Courses" %>
+    <div>
+    <h3>Filter Attendance Records:</h3>
+    <%= form_tag(attendances_path, method: 'get') do %>
+         <!-- new code: filter by course -->
+        <%= label_tag :course_id, "By Course" %>
+        <%= select_tag :course_id, options_from_collection_for_select(Course.all, :id, :name), include_blank: true %>
+
+        <!-- new code: filter by student -->
+        <%= label_tag :user_id, "By Student"%>
+        <%= select_tag :user_id, options_from_collection_for_select(User.all_users('student'), :id, :name), include_blank: true %>
+        <%= submit_tag "Filter" %>
+    <% end %>
+    </div>
+    <br>
+<% end %>
 
 
 <table>

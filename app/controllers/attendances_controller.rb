@@ -1,20 +1,26 @@
 class AttendancesController < ApplicationController
-    #  before_action :set_course, only: [:show, :edit, :update, :destroy]
     before_action :set_attendance, only: [:show, :edit, :update, :destroy]
     before_action :require_login, only: [:new, :create, :show, :edit, :update, :destroy]
 
     def index 
-        if params[:course_id]
+        #fixme: breaks if you filter by something that doesn't exist 
+        if !params[:course_id].blank? && !params[:user_id].blank?
+            # filter both 
+            @user = User.find(params[:user_id])
+            @course = Course.find(params[:course_id])
+            @record = "#{@user.name} in #{@course.name}"
+            @attendances = Attendance.find_by_user_and_course(@user.id, @course.id)
+        elsif !params[:course_id].blank?
         # course attendance index 
             @record = Course.find(params[:course_id])
             @attendances = Attendance.sort_by_date(Attendance.find_by_course_id(@record.id))
         # student attendance index 
-        elsif params[:user_id]
+        elsif !params[:user_id].blank?
             @record = User.find(params[:user_id])
             @attendances = Attendance.sort_by_date(Attendance.find_by_user_id(@record.id))
         # all attendance index
         else  
-            @record = "all"
+            @record = "All Courses"
             @attendances = Attendance.sort_by_date(Attendance.all)
         end 
     end 

@@ -8,12 +8,24 @@ class Attendance < ApplicationRecord
 
     validates :date, uniqueness: {scope: :course,  message: " - Course attendance on this date has already been taken."}
 
+    def user_ids
+        self.attendee_ids + self.absentee_ids
+    end 
+
     def self.find_by_course_id(course_id)
-        self.all.select{|attendance| attendance.course_id == course_id}
+        # self.all.select{|attendance| attendance.course_id == course_id}
+        self.where(course_id: course_id)
     end 
 
     def self.find_by_user_id(user_id)
+        # self.all.select{|attendance| (attendance.attendee_ids.include?(user_id) || attendance.absentee_ids.include?(user_id))}
         self.all.select{|attendance| attendance.user_ids.include?(user_id)}
+        # self.where(user_id: user_id)
+    end 
+
+    def self.find_by_user_and_course(user_id, course_id)
+        # attendances = self.find_by_user_id(user_id)
+        self.where(course_id: course_id).select{|attendance| attendance.user_ids.include?(user_id)}
     end 
 
     # fixme: breaks if nil
