@@ -22,7 +22,7 @@
     </tr>
     <% @attendances.each do |attendance| %>
         <tr>
-            <td><%= attendance.course.name %></td>
+            <td><%= link_to attendance.course.name, course_path(attendance.course) %></td>
             <td><%= format_date(attendance.date) %></td>
             <td><%= attendance.attendee_list %></td>
             <td><%= attendance.absentee_list %></td>

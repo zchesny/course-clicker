@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post '/logout', to: 'sessions#destroy'
   
   # atttendance 
-  resources :attendances, only: [:index, :create, :destroy]
+  resources :attendances, only: [:index, :create, :update, :destroy]
   resources :courses, only: [:show, :index] do
     # add destroy attendances
     resources :attendances, only: [:show, :index, :new, :edit]
