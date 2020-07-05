@@ -15,15 +15,15 @@
 
 <%= form_for(@attendance) do |f| %>
 
-    <%= f.hidden_field :course_id, value: @course.id %>
+    <%= f.hidden_field :course_id, value: @attendance.course.id %>
 
     <%= f.label :date %>
     <%= f.date_select :date %>
 
     <h3>Students: </h3>
-    <p>Please uncheck students who are absent.</p>
-    <ol><% @course.get_users('student').each do |student| %>
-        <li> <%= f.check_box :attendee_ids, {multiple: true, checked: true}, student.id, nil %><%= student.name %><br></li>
+    <p>Please select students who are present.</p>
+    <ol><% @attendance.course.get_users('student').each do |student| %>
+        <li> <%= f.check_box :attendee_ids, {multiple: true}, student.id, nil %><%= student.name %><br></li>
     <% end %></ol>
 
     <%= f.submit "Submit Attendance" %>

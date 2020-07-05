@@ -21,7 +21,6 @@ class AttendancesController < ApplicationController
 
     def new 
         # only if logged in as admin or teacher 
-        @course = Course.find(params[:course_id])
         @attendance = Attendance.new(course_id: params[:course_id])
     end 
 

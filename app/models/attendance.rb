@@ -1,12 +1,12 @@
 class Attendance < ApplicationRecord
     belongs_to :course 
-    # has_many :user_attendances
-    # has_many :users, through: :user_attendances 
 
     has_many :user_attendances
     has_many :user_absences 
     has_many :attendees, through: :user_attendances, source: :user 
     has_many :absentees, through: :user_absences, source: :user
+
+    validates :date, uniqueness: {scope: :course,  message: " - Course attendance on this date has already been taken."}
 
     def self.find_by_course_id(course_id)
         self.all.select{|attendance| attendance.course_id == course_id}
