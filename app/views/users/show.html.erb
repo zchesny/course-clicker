@@ -2,10 +2,27 @@
 
 <% if !current_user.role?('admin') %>
 
+    
     <h3>Today's Schedule (<%= current_user.get_today %>):</h3>
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Course</th>
+            <% if current_user.role?('teacher') %>
+                <th>Attendance</th>
+            <% end %>
+        </tr>
         <% Course.sort_by_time(current_user.todays_schedule).each do |course| %>
-            [<%= course.time %>]: <%= link_to course.name, course_path(course) %><br>
+            <tr>
+                <td><%= course.time %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
+                <% if current_user.role?('teacher') %><td>
+                    <%= link_to 'Take Attendance', new_course_attendance_path(course) %>
+                </td><% end %>
+            </tr>
         <% end %>
+    </table>
+
 
     <br>
     <h3>Weekly Schedule:</h3>
@@ -69,6 +86,9 @@
                 <th>Time</th>
                 <th>Teachers</th>
                 <th>Enrollment</th>
+                <% if current_user.role?('teacher') %>
+                    <th>Options</th>
+                <% end %>
             </tr>
             <% Course.sort_by_time(current_user.courses).each do |course| %>
                 <tr>
@@ -77,6 +97,12 @@
                     <td><%= course.time %></td>
                     <td><%= course.role_list('teacher') %></td>
                     <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
+                    <% if current_user.role?('teacher') %>
+                        <td>
+                            <%= link_to 'Edit', edit_course_path(course) %> | 
+                            <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                        </td>
+                    <% end %>
                 </tr>
             <% end %>
         </table>
