@@ -4,7 +4,8 @@ class User < ApplicationRecord
     # has_many :enrollments
     # has_many :courses, through: :enrollments
     # has_many :teachers, through: :courses 
-    has_many :attendances 
+    has_many :user_attendances
+    has_many :attendances, through: :user_attendances 
 
     # courses attended? 
     has_secure_password

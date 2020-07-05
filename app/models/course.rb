@@ -14,6 +14,10 @@ class Course < ApplicationRecord
         users.select{|user| user.role?(role)}
     end 
 
+    def get_user_ids(role) 
+        users.select{|user| user.role?(role)}.map{|user| user.id}
+    end 
+
     def get_users_count(role)
         get_users(role).count
     end 

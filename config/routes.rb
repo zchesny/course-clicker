@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users
   resources :courses
-  resources :attendances
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   root 'sessions#new'
@@ -14,4 +14,17 @@ Rails.application.routes.draw do
 
   # log out, make this post in real life but tests require get
   post '/logout', to: 'sessions#destroy'
+  
+  # atttendance 
+  resources :attendances, only: [:index, :create]
+  resources :courses, only: [:show, :index] do
+    # add destroy attendances
+    resources :attendances, only: [:show, :index, :new, :edit]
+  end
+
+  # have an attendance resource for students 
+  resources :users, only: [:show] do 
+    resources :attendances, only: [:show, :index]
+  end 
+
 end

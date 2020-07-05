@@ -1,0 +1,22 @@
+<h2>Attendance Record for 
+    <% if @record.class != String %>
+        <%= @record.name %>
+    <% else %>
+        All Courses
+    <% end %>
+</h2>
+
+<% @attendances.each do |attendance| %>
+    <h3>Record for <%= attendance.course.name %> on <%= format_date(attendance.date) %></h3>
+    <h4 class="present">Present</h4>
+    <ol><% attendance.attendees.each do |student| %>
+        <li><%= student.name %></li>
+    <% end %></ol>
+    <h4 class="absent">Absent</h4>
+    <ol><% attendance.absentees.each do |student| %>
+        <li><%= student.name %></li>
+    <% end %></ol>
+
+<% end %>
+
+

@@ -3,19 +3,33 @@ class AttendancesController < ApplicationController
     before_action :require_login, only: [:new, :create, :show, :edit, :update, :destroy]
 
     def index 
+        if params[:course_id]
+        # course attendance index 
+            @record = Course.find(params[:course_id])
+            @attendances = Attendance.find_by_course_id(@record.id)
+        # student attendance index 
+        elsif params[:user_id]
+            @record = User.find(params[:user_id])
+            @attendances = Attendance.find_by_user_id(@record.id)
+        # all attendance index
+        else  
+            @record = "all"
+            @attendances = Attendance.all
+        end 
     end 
 
     def new 
         # only if logged in as admin or teacher 
-        @attendance = Attendance.new 
+        @course = Course.find(params[:course_id])
+        @attendance = Attendance.new(course_id: params[:course_id])
     end 
 
     def create 
-
         @attendance = Attendance.new(attendance_params)
+        @attendance.set_absentees(@attendance.attendee_ids)
 
         if @attendance.save
-            redirect_to attendance_path(@attendance), notice: "Attendance for #{@attendance.course_id} on #{@attendance.date} was successfully taken."
+            redirect_to course_attendances_path(@attendance.course), notice: "Attendance for #{@attendance.course_id} on #{@attendance.date} was successfully taken."
         else 
             render :new 
         end 
@@ -51,8 +65,8 @@ class AttendancesController < ApplicationController
     def attendance_params 
         params.require(:attendance).permit(
             :course_id,
-            :user_id,
-            :date
+            :date,
+            attendee_ids: []
         )
     end 
 end
