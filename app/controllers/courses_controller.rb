@@ -16,7 +16,7 @@ class CoursesController < ApplicationController
         @course.weekly_schedule_attribute = params[:course][:weekly_schedule]
 
         if @course.save
-            redirect_to course_path(@course)
+            redirect_to course_path(@course), notice: "#{@course.name} was successfully created."
         else 
             render :new 
         end 

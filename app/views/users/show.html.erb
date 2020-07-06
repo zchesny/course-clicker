@@ -1,9 +1,28 @@
 <h2>Welcome, <%= current_user.name %>! [<%= current_user.role %>] </h2>
 
-<% if !current_user.role?('admin') %>
+<div class="alert alert-info error_explanation">
+  <%= flash[:notice] %>
+</div>
 
+<% if !current_user.role?('admin') || current_user != @user %>
+    <% if current_user.role?('admin') %>
+        <table>
+            <tr>
+                <th>Courses</th>
+                <th>Users</th>
+                <th>Attendance</th>
+            </tr>
+            <tr>
+                <td><%= link_to "Manage Courses", courses_path %> <br> <%= link_to "Create Course", new_course_path %></td>
+                <td><%= link_to "Manage Users", users_path %> <br> <%= link_to "Create User", new_user_path %></td>
+                <td><%= link_to "Manage Attendance", attendances_path %> <br> <%= link_to "Take Attendance", attendances_path %></td>
+            </tr>
+        </table>
+        <br>
+        <h2>Viewing <%= @user.name %>'s Homepage</h2>
+    <% end %>
     
-    <h3>Today's Schedule (<%= current_user.get_today %>):</h3>
+    <h3>Today's Schedule (<%= @user.get_today %>):</h3>
     <table>
         <tr>
             <th>Time</th>
@@ -12,7 +31,7 @@
                 <th>Attendance</th>
             <% end %>
         </tr>
-        <% Course.sort_by_time(current_user.todays_schedule).each do |course| %>
+        <% Course.sort_by_time(@user.todays_schedule).each do |course| %>
             <tr>
                 <td><%= course.time %></td>
                 <td><%= link_to course.name, course_path(course) %></td>
@@ -36,7 +55,7 @@
         <th>Sat</th>
         <th>Sun</th>
         </tr>
-        <% current_user.courses.each do |course| %>
+        <% @user.courses.each do |course| %>
         <tr>
             <% if  course.scheduled_on?("Mon") %>
                 <td><%= course.name %></td>
@@ -90,7 +109,7 @@
                     <th>Options</th>
                 <% end %>
             </tr>
-            <% Course.sort_by_time(current_user.courses).each do |course| %>
+            <% Course.sort_by_time(@user.courses).each do |course| %>
                 <tr>
                     <td><%= link_to course.name, course_path(course) %></a></td>
                     <td><%= course.weekly_schedule %></td>
@@ -109,16 +128,19 @@
 <% else %>
     <table>
             <tr>
-                <th>Users</th>
                 <th>Courses</th>
+                <th>Users</th>
                 <th>Attendance</th>
             </tr>
             <tr>
-                <td><%= link_to "Manage Users", users_path %> <br> <%= link_to "Create User", new_user_path %></td>
                 <td><%= link_to "Manage Courses", courses_path %> <br> <%= link_to "Create Course", new_course_path %></td>
+                <td><%= link_to "Manage Users", users_path %> <br> <%= link_to "Create User", new_user_path %></td>
                 <td><%= link_to "Manage Attendance", attendances_path %> <br> <%= link_to "Take Attendance", attendances_path %></td>
             </tr>
-        </table>
+    </table>
+
+    
+
 
 <% end %>
 

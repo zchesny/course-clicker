@@ -4,6 +4,12 @@
   <%= flash[:notice] %>
 </div>
 
+<% if current_user.role?('admin') %>
+    <p>
+        <%= link_to "Create Course", new_course_path %>
+    </p>
+<% end %>
+
 <table>
     <tr>
         <th>Course Name</th>

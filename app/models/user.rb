@@ -1,16 +1,14 @@
 class User < ApplicationRecord
     has_many :user_courses 
     has_many :courses, through: :user_courses 
-    # has_many :enrollments
-    # has_many :courses, through: :enrollments
-    # has_many :teachers, through: :courses 
+
     has_many :user_attendances
     has_many :attendances, through: :user_attendances 
 
-    # courses attended? 
     has_secure_password
     validates :name, presence: true 
     validates :name, uniqueness: true 
+    # validates :name, uniqueness: {scope: :role,  message: " - A user with this name and role has already been created."} 
 
     include Schedulable::InstanceMethods
 

@@ -2,13 +2,16 @@ class Course < ApplicationRecord
     has_many :user_courses
     has_many :users, through: :user_courses 
 
-    # has_many :enrollments 
-    # has_many :students, through: :enrollments 
-
-    # has_many :teacher_courses 
-    # has_many :teachers, through: :teacher_courses 
-
     has_many :attendances
+
+    validates :name, uniqueness: true
+    validates :capacity, numericality: { only_integer: true, less_than: 9999, greater_than: 0}
+
+    validate :validate_user_count
+
+    def validate_user_count
+      errors.add(:users, " - The number of enrolled students is beyond course capacity") if users.size > capacity
+    end
 
     def get_users(role) 
         users.select{|user| user.role?(role)}
@@ -23,7 +26,7 @@ class Course < ApplicationRecord
     end 
 
     def weekly_schedule_attribute=(weekly_schedule_attribute)
-        self.weekly_schedule = weekly_schedule_attribute.join('/')
+        self.weekly_schedule = weekly_schedule_attribute.join('/') unless weekly_schedule_attribute.nil?
         self.save
     end 
 
