@@ -34,6 +34,7 @@ class Attendance < ApplicationRecord
         self.absentee_ids = all_student_ids - attendee_ids
     end 
 
+    # fixme? breaks if .join is called on empty?
     def attendee_list
         self.attendees.collect{|attendee| attendee.name}.join(', ')
     end 

@@ -10,7 +10,7 @@ class Course < ApplicationRecord
     validate :validate_user_count
 
     def validate_user_count
-      errors.add(:users, " - The number of enrolled students is beyond course capacity") if users.size > capacity
+      errors.add(:users, " - The number of enrolled students is beyond course capacity") if get_users_count('student') > capacity
     end
 
     def get_users(role) 
