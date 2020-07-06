@@ -43,7 +43,7 @@ class Course < ApplicationRecord
     end 
 
     def scheduled_on?(day)
-        !self.weekly_schedule.scan(day).empty?
+        !self.weekly_schedule.scan(day).empty? if self.weekly_schedule
     end 
 
     def role_list(role)

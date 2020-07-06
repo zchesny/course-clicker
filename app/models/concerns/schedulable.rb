@@ -6,8 +6,9 @@ module Schedulable
     module InstanceMethods
         def todays_schedule
             today = get_today[0, 3]
-            courses = self.courses
-            courses.collect{|course| course if course.scheduled_on?(today)}.compact
+            if courses = self.courses
+                courses.collect{|course| course if course.scheduled_on?(today)}.compact
+            end 
         end
 
         def get_today
