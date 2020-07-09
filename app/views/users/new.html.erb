@@ -29,3 +29,8 @@
       <%= f.submit "Sign Up"%>
     <% end %>
   <% end %>
+
+  <br>
+  <% if !logged_in? && request.env['PATH_INFO'] == new_user_path %>
+      <p>Already have an account? <%= link_to "Login", root_path %></p>
+  <% end %>

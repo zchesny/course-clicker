@@ -21,12 +21,20 @@ class ApplicationController < ActionController::Base
     end 	
 
     def require_login	
-        redirect_to root_path if !logged_in?	
+        redirect_to root_path, notice: 'Sorry, you must be logged in for access.' if !logged_in?	
     end 	
 
-    def require_role(role)
-        require_login
-        redirect_to user_path(current_user) if !current_user.role?(role)	
+    # this produced a syntax error
+    # def require_role(role)
+    #     require_login
+    #     redirect_to user_path(current_user) if !current_user.role?(role)	
+    # end 
+
+    # before_action :require_login, only: :require_admin
+    def require_admin
+        # require_login
+        return redirect_to root_path, notice: 'Sorry, you must be logged in for access.' if !logged_in?	
+        redirect_to user_path(current_user), notice: 'Sorry, an Admin role is required for access.' if !current_user.role?('admin')	
     end 
 	
 end

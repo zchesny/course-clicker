@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
     before_action :set_course, only: [:show, :edit, :update, :destroy]
-    before_action :require_login, only: [:new, :create, :show, :edit, :update, :destroy]
+    before_action :require_login
 
     def index 
     end 

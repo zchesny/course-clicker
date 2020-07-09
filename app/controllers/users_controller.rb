@@ -1,16 +1,18 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
+    before_action :require_login, only: [:index, :show, :edit, :update, :destroy]
 
+    before_action :require_admin, only: :index
     def index 
         @users = User.all
     end 
 
+    before_action :admin_registration, only: :new
     def new 
         @user = User.new 
     end 
 
-    before_action :protect_registration, only: [:create]
-
+    before_action :protect_registration, only: :create
     def create 
         @user = User.new(user_params)
         if @user.save
@@ -27,6 +29,9 @@ class UsersController < ApplicationController
     end 
 
     def show 
+        if current_user != @user 
+            redirect_to user_path(current_user), notice: 'Sorry, an Admin role is required for access.' unless current_user.role?('admin')
+        end 
     end 
 
     def edit 
@@ -59,7 +64,6 @@ class UsersController < ApplicationController
     end 
 
     def validate_registration
-        binding.pry
         !!(params[:user][:code] == ENV['ADMIN_CODE'] && params[:user][:role] == 'Admin') || 
         (params[:user][:code] == ENV['TEACHER_CODE'] && params[:user][:role] == 'Teacher') || 
         (params[:user][:code] == ENV['STUDENT_CODE'] && params[:user][:role] == 'Student')
@@ -69,5 +73,11 @@ class UsersController < ApplicationController
         if !validate_registration
             redirect_to new_user_path, notice: 'Sorry, the registration code is invalid for the role in which you are registering'
         end 
+    end 
+
+    def admin_registration
+        if logged_in? && !current_user.role?('admin')
+            redirect_to user_path(current_user), notice: 'Sorry, you must be an Admin to register a new user.'
+        end
     end 
 end
