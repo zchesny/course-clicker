@@ -37,7 +37,6 @@
           <th><%= render 'sessions/logout' %></th>
         <% elsif current_user.role?('student') %>
           <th><%= link_to "Courses", courses_path %></th>
-          <th><a href="/courses/enroll">Enroll</a></th>
           <th><%= link_to "Home", user_path(current_user) %></th>
           <th><%= render 'sessions/logout' %></th>
         <% end %>

@@ -15,7 +15,8 @@
         <th>Courses</th>
         <th>First Created</th>
         <th>Last Updated</th>
-        <th>Options</th>
+        <th>Attendance</th>
+        <th>User Options</th>
     </tr>
     <% User.sort_by_name.each do |user| %>
         <tr>
@@ -24,6 +25,11 @@
             <td><%= user.course_list %></td>
             <td><%= first_created(user) %></td>
             <td><%= last_updated(user) %></td>
+            <td>
+                <% if user.role?('student') %>
+                    <%= link_to 'View', user_attendances_path(user) %>
+                <% end %>
+            </td>
             <td>
                 <%= link_to 'Edit', edit_user_path(user) %> | 
                 <%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %>

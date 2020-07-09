@@ -8,6 +8,9 @@ class User < ApplicationRecord
     has_secure_password
     validates :name, presence: true 
     validates :name, uniqueness: true 
+
+    # need validation code 
+    attr_accessor :code
     # validates :name, uniqueness: {scope: :role,  message: " - A user with this name and role has already been created."} 
 
     include Schedulable::InstanceMethods

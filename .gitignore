@@ -40,3 +40,6 @@ yarn-debug.log*
 
 # Ignore .seeds file for security
 # /db/seeds.rb
+
+# Ignore application configuration
+/config/application.yml

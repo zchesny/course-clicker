@@ -9,6 +9,8 @@ class UsersController < ApplicationController
         @user = User.new 
     end 
 
+    before_action :protect_registration, only: [:create]
+
     def create 
         @user = User.new(user_params)
         if @user.save
@@ -30,7 +32,12 @@ class UsersController < ApplicationController
     def edit 
     end 
 
-    def update 
+    def update
+        if @user.update(user_params)
+            redirect_to user_path(@user), "#{@user.name} [#{@user.role}] successfully updated."
+        else 
+            render :edit 
+        end  
     end 
 
     def destroy 
@@ -48,6 +55,19 @@ class UsersController < ApplicationController
     end 
 
     def user_params 
-        params.require(:user).permit(:name, :password, :role)
+        params.require(:user).permit(:name, :password, :role, :code)
+    end 
+
+    def validate_registration
+        binding.pry
+        !!(params[:user][:code] == ENV['ADMIN_CODE'] && params[:user][:role] == 'Admin') || 
+        (params[:user][:code] == ENV['TEACHER_CODE'] && params[:user][:role] == 'Teacher') || 
+        (params[:user][:code] == ENV['STUDENT_CODE'] && params[:user][:role] == 'Student')
+    end 
+
+    def protect_registration
+        if !validate_registration
+            redirect_to new_user_path, notice: 'Sorry, the registration code is invalid for the role in which you are registering'
+        end 
     end 
 end

@@ -1,6 +1,6 @@
 <h2>Attendance Record for 
     <% if @record.class != String %>
-        <%= @record.name %>
+        <%= link_to @record.name, @record %>
     <% else %>
         <%= @record %>
     <% end %>

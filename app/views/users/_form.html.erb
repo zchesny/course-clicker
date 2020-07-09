@@ -2,7 +2,7 @@
   <div class="error_explanation">
     <h4>
       <%= pluralize(@user.errors.count, "error") %>
-      prohibited this sign up:
+      prohibited this registration:
     </h4>
  
     <ul>
@@ -13,16 +13,3 @@
   </div>
 <% end %>
 
-<%= form_for(@user) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, placeholder: "Enter Name Here", required: true %><br>
-
-
-    <%= f.label :role %>
-    <%= f.select(:role, ['Teacher', 'Admin', 'Student'])%><br>
-
-    <%= f.label :password %>
-    <%= f.password_field :password, required: true %><br>
-
-    <%= f.submit "Sign Up"%>
-<% end %>

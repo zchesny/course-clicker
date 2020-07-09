@@ -22,6 +22,10 @@
         <h2>Viewing <%= @user.name %>'s Homepage</h2>
     <% end %>
     
+    <% if @user.role?('student') %>
+        <p><%= link_to 'View Attendance', user_attendances_path(@user) %></p>
+    <% end %>
+
     <h3>Today's Schedule (<%= @user.get_today %>):</h3>
     <table>
         <tr>
