@@ -1,3 +1,7 @@
+<div class="alert alert-info error_explanation">
+  <%= flash[:notice] %>
+</div>
+
 <% if @user.errors.any? %>
   <div class="error_explanation">
     <h4>
@@ -11,5 +15,31 @@
     <% end %>
     </ul>
   </div>
+<% end %>
+
+<%= form_for(@user) do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Enter Name Here", required: true %><br>
+
+    <% if request.env['PATH_INFO'] == new_user_path %>
+      <%= f.label :role %>
+      <%= f.select(:role, ['Teacher', 'Admin', 'Student'])%><br>
+
+      <%= f.label :code, "Registration Code"%>
+      <%= f.text_field :code %><br>
+    <% end %>
+
+    <%= f.label :password %>
+    <%= f.password_field :password, required: true %><br>
+
+    <% if request.env['PATH_INFO'] == new_user_path %>
+      <% if logged_in? && current_user.role?('admin') %>
+        <%= f.submit %>
+      <% else %>
+        <%= f.submit "Sign Up"%>
+      <% end %>
+    <% else %>
+      <%= f.submit "Update"%>
+    <% end %>
 <% end %>
 

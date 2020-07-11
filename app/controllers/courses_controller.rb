@@ -1,6 +1,8 @@
 class CoursesController < ApplicationController
     before_action :set_course, only: [:show, :edit, :update, :destroy]
     before_action :require_login
+    before_action :require_teacher, only: [:new, :crerate, :edit, :update, :destroy]
+    before_action :require_ownership, only: [:edit, :update, :destroy]
 
     def index 
     end 
@@ -11,10 +13,8 @@ class CoursesController < ApplicationController
     end 
 
     def create 
-
         @course = Course.new(course_params)
         @course.weekly_schedule_attribute = params[:course][:weekly_schedule]
-
         if @course.save
             redirect_to course_path(@course), notice: "#{@course.name} was successfully created."
         else 
@@ -30,6 +30,13 @@ class CoursesController < ApplicationController
 
     def update 
         if @course.update(course_params)
+            if params[:course][:weekly_schedule]
+                ws = params[:course][:weekly_schedule] 
+            else
+                ws = [""]
+            end 
+            @course.weekly_schedule_attribute = ws
+            @course.save
             redirect_to course_path(@course), notice: "#{@course.name} was successfully updated."
         else 
             render :edit 

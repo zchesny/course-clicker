@@ -44,9 +44,11 @@
             <td><%= attendance.attendee_list %></td>
             <td><%= attendance.absentee_list %></td>
             <td>
-                <%= link_to 'View', course_attendance_path(attendance.course, attendance) %> |
-                <%= link_to 'Edit', edit_course_attendance_path(attendance.course, attendance) %> | 
-                <%= link_to 'Delete', attendance, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <% if admin_or_teacher_ownership?(attendance.course) %>
+                    <%= link_to 'View', course_attendance_path(attendance.course, attendance) %> |
+                    <%= link_to 'Edit', edit_course_attendance_path(attendance.course, attendance) %> | 
+                    <%= link_to 'Delete', attendance, method: :delete, data: { confirm: 'Are you sure?' } %>
+                <% end %>
             </td>
         </tr>
     <% end %>

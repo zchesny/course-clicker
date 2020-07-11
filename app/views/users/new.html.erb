@@ -4,31 +4,7 @@
     <h2>Register a New User</h2>
 <% end %>
 
-<div class="alert alert-info error_explanation">
-  <%= flash[:notice] %>
-</div>
-
 <%= render 'form' %>
-
-<%= form_for(@user) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, placeholder: "Enter Name Here", required: true %><br>
-
-    <%= f.label :role %>
-    <%= f.select(:role, ['Teacher', 'Admin', 'Student'])%><br>
-
-    <%= f.label :code, "Registration Code"%>
-    <%= f.text_field :code %><br>
-
-    <%= f.label :password %>
-    <%= f.password_field :password, required: true %><br>
-
-    <% if logged_in? && current_user.role?('admin') %>
-      <%= f.submit %>
-    <% else %>
-      <%= f.submit "Sign Up"%>
-    <% end %>
-  <% end %>
 
   <br>
   <% if !logged_in? && request.env['PATH_INFO'] == new_user_path %>

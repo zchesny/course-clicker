@@ -6,24 +6,28 @@
 
 <% if !current_user.role?('admin') || current_user != @user %>
     <% if current_user.role?('admin') %>
-        <table>
-            <tr>
-                <th>Courses</th>
-                <th>Users</th>
-                <th>Attendance</th>
-            </tr>
-            <tr>
-                <td><%= link_to "Manage Courses", courses_path %> <br> <%= link_to "Create Course", new_course_path %></td>
-                <td><%= link_to "Manage Users", users_path %> <br> <%= link_to "Create User", new_user_path %></td>
-                <td><%= link_to "Manage Attendance", attendances_path %> <br> <%= link_to "Take Attendance", attendances_path %></td>
-            </tr>
-        </table>
+        <%= render 'admin' %>
         <br>
-        <h2>Viewing <%= @user.name %>'s Homepage</h2>
+        <h2>Viewing <%= @user.name %>'s Homepage [<%= @user.role %>] </h2>
     <% end %>
     
     <% if @user.role?('student') %>
-        <p><%= link_to 'View Attendance', user_attendances_path(@user) %></p>
+        <p>
+            <%= link_to 'View Attendance', user_attendances_path(@user) %> |
+            <%= link_to "Update Profile", edit_user_path(@user) %> 
+            <% if current_user.role?('admin') %>
+                | <%= link_to 'Delete Profile', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+        </p>
+    <% end %>
+
+    <% if @user.role?('teacher')%>
+        <p>
+            <%= link_to "Update Profile", edit_user_path(@user) %>
+            <% if current_user.role?('admin') %>
+                | <%= link_to 'Delete Profile', @user, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+        </p>
     <% end %>
 
     <h3>Today's Schedule (<%= @user.get_today %>):</h3>
@@ -130,22 +134,7 @@
             <% end %>
         </table>
 <% else %>
-    <table>
-            <tr>
-                <th>Courses</th>
-                <th>Users</th>
-                <th>Attendance</th>
-            </tr>
-            <tr>
-                <td><%= link_to "Manage Courses", courses_path %> <br> <%= link_to "Create Course", new_course_path %></td>
-                <td><%= link_to "Manage Users", users_path %> <br> <%= link_to "Create User", new_user_path %></td>
-                <td><%= link_to "Manage Attendance", attendances_path %> <br> <%= link_to "Take Attendance", attendances_path %></td>
-            </tr>
-    </table>
-
-    
-
-
+    <%= render 'admin' %>
 <% end %>
 
 

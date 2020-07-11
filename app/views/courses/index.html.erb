@@ -17,7 +17,7 @@
         <th>Time</th>
         <th>Teachers</th>
         <th>Enrollment</th>
-        <% if current_user.role?('admin') %>
+        <% if current_user.role?('admin') || current_user.role?('teacher') %>
             <th>Options</th>
         <% end %>
     </tr>
@@ -28,12 +28,13 @@
             <td><%= course.time %></td>
             <td><%= course.role_list('teacher') %></td>
             <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
-            <% if current_user.role?('admin') %>
-                <td>
+            <td>
+            <% if admin_or_teacher_ownership?(course) %>
                     <%= link_to 'Edit', edit_course_path(course) %> | 
-                    <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %>
-                </td>
+                    <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %> |
+                    <%= link_to 'Take Attendance', new_course_attendance_path(course) %>
             <% end %>
+            </td>
         </tr>
     <% end %>
 </table>

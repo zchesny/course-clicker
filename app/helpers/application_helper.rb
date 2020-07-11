@@ -10,4 +10,8 @@ module ApplicationHelper
     def format_date(date)
         date.strftime("%A, %d %b %Y")
     end
+
+    def admin_or_teacher_ownership?(course)
+        !!(current_user.role?('teacher') && current_user.courses.include?(course)) || (current_user.role?('admin'))
+    end
 end

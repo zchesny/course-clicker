@@ -30,7 +30,7 @@
     <% end %></ol>
 
 <br>
-<% if (current_user.role?('teacher') && current_user.courses.include?(@course)) || (current_user.role?('admin')) %>
+<% if admin_or_teacher_ownership?(@course) %>
     <table>
         <tr>
             <td><%= link_to 'Take Attendance', new_course_attendance_path(@course) %></td>

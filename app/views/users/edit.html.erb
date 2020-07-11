@@ -1,16 +1,7 @@
-<h2>Update User Info</h2>
+<% if current_user === @user %> 
+  <h2>Update Your Profile</h2>
+<% else %> 
+  <h2>Update <%= @user.name %>'s Profile</h2>
+<% end %>
+
 <%= render 'form' %>
-
-<%= form_for(@user) do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, placeholder: "Enter Name Here", required: true %><br>
-
-
-    <%= f.label :role %>
-    <%= f.select(:role, ['Teacher', 'Admin', 'Student'])%><br>
-
-    <%= f.label :password %>
-    <%= f.password_field :password, required: true %><br>
-
-    <%= f.submit "Update"%>
-  <% end %>
