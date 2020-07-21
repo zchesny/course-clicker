@@ -30,6 +30,12 @@
     <%= f.select(:location, ['TBD', 'Barn', 'Computer Lab', 'Daehler', 'Greenhouse', 'Music Room', 'Oikos', 'Palmer', 'WTC'])%><br><br>
 
     <%= f.label :weekly_schedule, 'Schedule:' %>
+    
+    <% if request.env['PATH_INFO'] != new_course_path %>
+      <div class="error_explanation">
+        [Note] The original weekly schedule for this course was: <%= @course.weekly_schedule %>
+      </div>
+    <% end %>
 
     <% ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].each do |day| %>
       <%= f.check_box :weekly_schedule, {multiple: true}, day, nil %><%= day %>
