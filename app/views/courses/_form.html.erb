@@ -27,7 +27,7 @@
     <%= f.number_field :capacity, placeholder: "Enter Capacity Here", required: true %><br>
 
     <%= f.label :location, "Location:" %>
-    <%= f.text_field :location, placeholder: "Enter Location Here", required: true %><br>
+    <%= f.select(:location, ['TBD', 'Barn', 'Computer Lab', 'Daehler', 'Greenhouse', 'Music Room', 'Oikos', 'Palmer', 'WTC'])%><br><br>
 
     <%= f.label :weekly_schedule, 'Schedule:' %>
 
