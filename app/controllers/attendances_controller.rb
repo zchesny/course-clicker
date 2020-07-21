@@ -77,7 +77,7 @@ class AttendancesController < ApplicationController
 
     def edit 
         @course = Course.find(params[:course_id])
-        @attendance = Attendance.new(course_id: params[:course_id])
+        @attendance = Attendance.find(params[:id])
         @course = @attendance.course
         require_ownership
     end 
