@@ -6,15 +6,16 @@ class SessionsController < ApplicationController
     end 
 
     def create 
-        binding.pry
+        # if omniauth facebook login 
         if auth
             @user = User.find_or_create_by(name: auth['info']['name']) do |u|
                 u.name = auth['info']['name']
                 u.role = 'Student'
-                u.password = 'pass'
+                u.password = SecureRandom.hex
             end 
             session[:user_id] = @user.id
             redirect_to user_path(current_user)
+        # else regular login with username and password 
         else 
             user = User.find_by(name: params[:name])
             if user && user.authenticate(params[:password])
