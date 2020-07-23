@@ -55,6 +55,7 @@
     <h3>Weekly Schedule:</h3>
     <table>
         <tr>
+        <th>Time</th>
         <th>Mon</th>
         <th>Tue</th>
         <th>Wed</th>
@@ -63,40 +64,41 @@
         <th>Sat</th>
         <th>Sun</th>
         </tr>
-        <% @user.courses.each do |course| %>
+    <% Course.sort_by_time(@user.courses).each do |course| %>
         <tr>
+            <td><%= course.time %></td>
             <% if  course.scheduled_on?("Mon") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
             <% if  course.scheduled_on?("Tue") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
             <% if  course.scheduled_on?("Wed") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
             <% if  course.scheduled_on?("Thu") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
             <% if  course.scheduled_on?("Fri") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
             <% if  course.scheduled_on?("Sat") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
             <% if  course.scheduled_on?("Sun") %>
-                <td><%= course.name %></td>
+                <td><%= link_to course.name, course_path(course) %></td>
                 <% else %>
                 <td></td>
             <% end %>
@@ -136,6 +138,9 @@
 <% else %>
     <%= render 'admin' %>
 <% end %>
+
+
+
 
 
 
