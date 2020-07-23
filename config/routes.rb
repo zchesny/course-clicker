@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   # log the user in 
   post '/sessions', to: 'sessions#create'
+  get '/auth/facebook/callback', to: 'sessions#create'
 
   # log out, make this post in real life but tests require get
   post '/logout', to: 'sessions#destroy'

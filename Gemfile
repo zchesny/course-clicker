@@ -28,6 +28,10 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'pry'
 gem 'figaro'
 
+# omniauth
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
