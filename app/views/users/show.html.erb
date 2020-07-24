@@ -95,7 +95,7 @@
     </table>
 
     <br>
-    <h3>Enrolled Courses:</h3>
+    <h3>Your Courses:</h3>
         <table>
             <tr>
                 <th>Course Name</th>
@@ -117,7 +117,8 @@
                     <% if current_user.role?('teacher') %>
                         <td>
                             <%= link_to 'Edit', edit_course_path(course) %> | 
-                            <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                            <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %> |
+                            <%= link_to 'Take Attendance', new_course_attendance_path(course) %>
                         </td>
                     <% end %>
                 </tr>
