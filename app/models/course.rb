@@ -51,6 +51,6 @@ class Course < ApplicationRecord
     end
 
     def self.sort_by_time(courses)
-        courses.sort_by{|c| c.military_start_time}
+        courses.sort_by{|c| c.military_start_time.utc}
     end
 end
