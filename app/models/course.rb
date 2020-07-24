@@ -4,8 +4,12 @@ class Course < ApplicationRecord
 
     has_many :attendances
 
+    validates :name, presence: true
     validates :name, uniqueness: true
     validates :capacity, numericality: { only_integer: true, less_than: 9999, greater_than: 0}
+    validates :military_start_time, presence: true 
+    validates :duration, presence: true 
+    validates :location, presence: true 
 
     validate :validate_user_count
 

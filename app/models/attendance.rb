@@ -6,6 +6,7 @@ class Attendance < ApplicationRecord
     has_many :attendees, through: :user_attendances, source: :user 
     has_many :absentees, through: :user_absences, source: :user
 
+    validates :date, presence: true 
     validates :date, uniqueness: {scope: :course,  message: " - Course attendance on this date has already been taken."}
 
     def user_ids
