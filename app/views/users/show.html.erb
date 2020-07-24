@@ -30,6 +30,10 @@
         </p>
     <% end %>
 
+    <div><form>
+        <input type="button" value="Print Weekly Schedule" onClick="window.print()">
+    </form></div><br>
+
     <h3>Today's Schedule (<%= @user.get_today %>):</h3>
     <table>
         <tr>
@@ -52,47 +56,49 @@
 
 
     <br>
-    <h3><%= @user.name %>'s Weekly Schedule:</h3>
-    <table>
-        <tr>
-        <th>Time</th>
-        <th>Mon</th>
-        <th>Tue</th>
-        <th>Wed</th>
-        <th>Thu</th>
-        <th>Fri</th>
-        </tr>
-    <% Course.sort_by_time(@user.courses).each do |course| %>
-        <tr>
-            <td><%= course.time %></td>
-            <% if  course.scheduled_on?("Mon") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
+    <div class="print">
+        <h3><%= @user.name %>'s Weekly Schedule:</h3>
+        <table>
+            <tr>
+            <th>Time</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            </tr>
+        <% Course.sort_by_time(@user.courses).each do |course| %>
+            <tr>
+                <td><%= course.time %></td>
+                <% if  course.scheduled_on?("Mon") %>
+                    <td><%= link_to course.name, course_path(course) %></td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Tue") %>
+                    <td><%= link_to course.name, course_path(course) %></td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Wed") %>
+                    <td><%= link_to course.name, course_path(course) %></td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Thu") %>
+                    <td><%= link_to course.name, course_path(course) %></td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Fri") %>
+                    <td><%= link_to course.name, course_path(course) %></td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+            </tr>
             <% end %>
-            <% if  course.scheduled_on?("Tue") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Wed") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Thu") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Fri") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-        </tr>
-        <% end %>
-    </table>
+        </table>
+    </div>
 
     <br>
     <h3>Your Courses:</h3>

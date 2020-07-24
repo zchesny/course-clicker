@@ -14,7 +14,7 @@
  *= require_self
  */
 
- @media screen {
+ @media screen, print {
     /* --- Reset Styles --- */
     * {
       margin: 0;
@@ -190,3 +190,28 @@
     left: 10px; 
   } */
   
+@media print {
+  body {
+    visibility: hidden; 
+  }
+
+  .print {
+    visibility: visible; 
+    display: block; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    page-break-inside: avoid;
+  }
+
+  html, body {
+    height:100%; 
+    margin: 0 !important; 
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
+  
+
+}
