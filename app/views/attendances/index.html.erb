@@ -33,7 +33,6 @@
     <tr>
         <th>Course</th>
         <th>Date</th>
-        <th>Present</th>
         <th>Absent</th>
         <th>Options</th>
     </tr>
@@ -41,7 +40,6 @@
         <tr>
             <td><%= link_to attendance.course.name, course_path(attendance.course) %></td>
             <td><%= format_date(attendance.date) %></td>
-            <td><%= attendance.attendee_list %></td>
             <td><%= attendance.absentee_list %></td>
             <td>
                 <% if admin_or_teacher_ownership?(attendance.course) %>

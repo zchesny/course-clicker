@@ -52,7 +52,7 @@
 
 
     <br>
-    <h3>Weekly Schedule:</h3>
+    <h3><%= @user.name %>'s Weekly Schedule:</h3>
     <table>
         <tr>
         <th>Time</th>
@@ -61,8 +61,6 @@
         <th>Wed</th>
         <th>Thu</th>
         <th>Fri</th>
-        <th>Sat</th>
-        <th>Sun</th>
         </tr>
     <% Course.sort_by_time(@user.courses).each do |course| %>
         <tr>
@@ -92,22 +90,12 @@
                 <% else %>
                 <td></td>
             <% end %>
-            <% if  course.scheduled_on?("Sat") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Sun") %>
-                <td><%= link_to course.name, course_path(course) %></td>
-                <% else %>
-                <td></td>
-            <% end %>
         </tr>
         <% end %>
     </table>
 
     <br>
-    <h3>Your Courses:</h3>
+    <h3>Enrolled Courses:</h3>
         <table>
             <tr>
                 <th>Course Name</th>
