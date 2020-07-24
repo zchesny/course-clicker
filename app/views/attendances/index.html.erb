@@ -33,21 +33,38 @@
     <tr>
         <th>Course</th>
         <th>Date</th>
-        <th>Absent</th>
-        <th>Options</th>
+        <% if request.env['PATH_INFO'].include?("users") || @user %>
+            <th class="present">Present</th>
+        <% end %>
+        <th class="absent">Absent</th>
+        <% if current_user.role?('admin') || current_user.role?('teacher') %>
+            <th>Options</th>
+        <% end %>
     </tr>
     <% @attendances.each do |attendance| %>
         <tr>
             <td><%= link_to attendance.course.name, course_path(attendance.course) %></td>
             <td><%= format_date(attendance.date) %></td>
-            <td><%= attendance.absentee_list %></td>
-            <td>
+            <% if request.env['PATH_INFO'].include?("users") || @user %>
+                <% if attendance.attendees.include?(@user) %>
+                    <td class="present">X</td>
+                    <td></td>
+                <% else %>
+                    <td></td>
+                    <td class="absent">X</td>
+                <% end %>
+            <% else %>
+                <td><%= attendance.absentee_list %></td>
+            <% end %>
                 <% if admin_or_teacher_ownership?(attendance.course) %>
+                    <td>
                     <%= link_to 'View', course_attendance_path(attendance.course, attendance) %> |
                     <%= link_to 'Edit', edit_course_attendance_path(attendance.course, attendance) %> | 
                     <%= link_to 'Delete', attendance, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    </td>
+                <% elsif current_user.role?('teacher') %>
+                    <td>N/A</td>
                 <% end %>
-            </td>
         </tr>
     <% end %>
 </table>
