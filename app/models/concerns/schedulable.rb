@@ -12,7 +12,7 @@ module Schedulable
         end
 
         def get_today
-            Time.now.strftime("%A")
+            Time.now.in_time_zone.strftime("%A")
         end
 
     end
