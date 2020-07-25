@@ -35,7 +35,7 @@
                     <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %> |
                     <%= link_to 'Take Attendance', new_course_attendance_path(course) %>
                 </td>
-            <% else %>
+            <% elsif current_user.role?('teacher') %>
                 <td> N/A </td>
             <% end %>
             
