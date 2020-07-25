@@ -44,6 +44,9 @@ class CoursesController < ApplicationController
     end 
 
     def destroy 
+        # delete associated attendances 
+        Attendance.where(course: @course).each{|a| a.destroy }
+        # then delete the course 
         @course.destroy
         redirect_to courses_path, notice: "#{@course.name} was successfully deleted."
     end 

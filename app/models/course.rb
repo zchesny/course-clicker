@@ -54,14 +54,8 @@ class Course < ApplicationRecord
         self.get_users(role).collect{|user| user.name}.join(', ')
     end
 
-    # def self.sort_by_time(courses)
-    #     courses.sort_by{|c| c.military_start_time}
-    # end
-
     def self.sort_by_time(courses)
-        courses.sort_by do |c|
-            # binding.pry
-            c.military_start_time.to_i
-        end
+        courses.sort_by{|c| c.military_start_time}
     end
+
 end

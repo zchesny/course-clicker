@@ -44,14 +44,7 @@ class Attendance < ApplicationRecord
         self.absentees.collect{|absentee| absentee.name}.join(', ')
     end 
 
-    # def self.sort_by_date(attendances)
-    #     attendances.sort_by{|a| a.date}.reverse
-    # end 
-
     def self.sort_by_date(attendances)
-        lst = attendances.sort_by do |a|
-            a.date.strftime("%s").to_i
-        end
-        lst.reverse 
+        attendances.sort_by{|a| a.date}.reverse
     end 
 end
