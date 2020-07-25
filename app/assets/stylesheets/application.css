@@ -212,6 +212,10 @@
     overflow: hidden;
   }
 
+  .attendance {
+    overflow: visible;
+  }
+
   
 
 }

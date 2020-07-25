@@ -1,3 +1,5 @@
+<div class="print attendance">
+
 <h2>Attendance Record for 
     <% if @record.class != String %>
         <%= link_to @record.name, @record %>
@@ -5,6 +7,10 @@
         <%= @record %>
     <% end %>
 </h2>
+
+    <div><form>
+        <input type="button" value="Print Attendance Record" onClick="window.print()">
+    </form></div><br>
 
 
 <div class="alert alert-info error_explanation">
@@ -69,7 +75,7 @@
     <% end %>
 </table>
 
-
+</div>
 
 
 
