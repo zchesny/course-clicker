@@ -1,8 +1,14 @@
+<div class="print">
+
 <h2>Course Catalog</h2>
 
 <div class="alert alert-info error_explanation">
   <%= flash[:notice] %>
 </div>
+
+<div><form>
+    <input type="button" value="Print Course Catalog" onClick="window.print()">
+</form></div>
 
 <% if current_user.role?('admin') %>
     <p>
@@ -10,22 +16,51 @@
     </p>
 <% end %>
 
+<div>
+<h3>Filter Courses:</h3>
+    <%= form_tag(courses_path, method: 'get') do %>
+         <!-- new code: filter by course -->
+        <%= label_tag :schedule, "By Schedule" %>
+        <%= select_tag :schedule,  options_for_select(["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]) %>
+
+        <!-- new code: filter by student -->
+        <%= label_tag :time, "By Time"%>
+        <%= select_tag :time, options_for_select(Course.start_times), include_blank: true %>
+
+        <!-- new code: filter by student -->
+        <%= label_tag :location, "By Location"%>
+        <%= select_tag :location, options_for_select(Course.locations), include_blank: true %>
+
+        <%= label_tag :user_id, "By Teacher"%>
+        <%= select_tag :user_id, options_from_collection_for_select(User.all_users('teacher'), :id, :name), include_blank: true %>
+
+        <%= submit_tag "Filter" %>
+    <% end %>
+    <%= form_tag(courses_path, method: 'get') do %>
+        <%= submit_tag "Clear Filters" %>
+    <% end %>
+</div><br>
+
 <table>
     <tr>
         <th>Course Name</th>
         <th>Schedule</th>
         <th>Time</th>
+        <th>Location</th>
         <th>Teachers</th>
         <th>Enrollment</th>
         <% if current_user.role?('admin') || current_user.role?('teacher') %>
             <th>Options</th>
         <% end %>
     </tr>
-    <% Course.sort_by_time(Course.all).each do |course| %>
+
+    <% if @courses %>
+    <% Course.sort_by_time(@courses).each do |course| %>
         <tr>
             <td><%= link_to course.name, course_path(course) %></td>
             <td><%= course.weekly_schedule %></td>
             <td><%= course.time %></td>
+            <td><%= course.location %></td>
             <td><%= course.role_list('teacher') %></td>
             <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
             
@@ -42,3 +77,5 @@
         </tr>
     <% end %>
 </table>
+<% end %>
+</div>

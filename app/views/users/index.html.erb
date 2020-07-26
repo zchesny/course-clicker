@@ -1,12 +1,35 @@
-<h2>All Users</h2>
+<div class="print attendance">
+<h2>All <%= flash[:alert] %> Users</h2>
+
+
+<div class= "hideprint" >
+    <div><form>
+        <input type="button" value="Print Users List" onClick="window.print()">
+    </form></div>
 
 <div class="alert alert-info error_explanation">
   <%= flash[:notice] %>
+  <% flash.clear %>
 </div>
 
 <p>
     <%= link_to "Create User", new_user_path %>
 </p>
+
+<div>
+    <h3>Filter Users:</h3>
+    <%= form_tag(users_path, method: 'get') do %>
+         <!-- new code: filter by course -->
+        <%= label_tag :role, "By Role" %>
+        <%= select_tag :role, options_for_select(["Student", "Teacher", "Admin"]) %>
+        <%= submit_tag "Filter" %>
+    <% end %>
+    <%= form_tag(users_path, method: 'get') do %>
+        <%= submit_tag "Clear Filters" %>
+    <% end %>
+    <br>
+</div>
+</div>
 
 <table>
     <tr>
@@ -18,7 +41,7 @@
         <th>Attendance</th>
         <th>User Options</th>
     </tr>
-    <% User.sort_by_name.each do |user| %>
+    <% @users.each do |user| %>
         <tr>
             <td><%= link_to user.name, user_path(user) %></td>
             <td><%= user.role %></td>
@@ -37,3 +60,4 @@
         </tr>
     <% end %>
 </table>
+</div>

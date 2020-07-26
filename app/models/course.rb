@@ -13,6 +13,8 @@ class Course < ApplicationRecord
 
     validate :validate_user_count
 
+    # scope :filter_by_teacher, -> (user_id) {joins(:users).where(user_id: user_id)}
+
     def validate_user_count
       errors.add(:users, " - The number of enrolled students is beyond course capacity") if get_users_count('student') > capacity
     end
@@ -56,6 +58,32 @@ class Course < ApplicationRecord
 
     def self.sort_by_time(courses)
         courses.sort_by{|c| c.military_start_time}
+    end
+
+    def self.start_times
+        self.distinct.pluck(:military_start_time).sort.collect do |time|
+            time.strftime("%I:%M %p")
+        end
+    end 
+
+    def self.locations 
+        self.distinct.pluck(:location)
+    end 
+
+    def self.filter_by_schedule(courses, schedule)
+        courses.select{|course| course.scheduled_on?(schedule)}
+    end 
+
+    def self.filter_by_time(courses, time)
+        courses.select{|course| course.military_start_time.strftime("%I:%M %p") == time}
+    end
+
+    def self.filter_by_location(courses, location)
+        courses.select{|course| course.location == location}
+    end
+
+    def self.filter_by_teacher(courses, teacher_id)
+        courses.select{|course| course.user_ids.include?(teacher_id.to_i)}
     end
 
 end

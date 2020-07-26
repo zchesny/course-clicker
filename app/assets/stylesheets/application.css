@@ -216,6 +216,10 @@
     overflow: visible;
   }
 
+  .hideprint {
+    visibility: hidden;
+  }
+
   
 
 }

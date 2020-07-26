@@ -5,6 +5,11 @@ class CoursesController < ApplicationController
     before_action :require_ownership, only: [:edit, :update, :destroy]
 
     def index 
+        @courses = Course.all 
+        @courses = Course.filter_by_schedule(@courses, params[:schedule]) if !params[:schedule].blank?
+        @courses = Course.filter_by_location(@courses, params[:location]) if !params[:location].blank?
+        @courses = Course.filter_by_time(@courses, params[:time]) if !params[:time].blank?
+        @courses = Course.filter_by_teacher(@courses, params[:user_id]) if !params[:user_id].blank?
     end 
 
     def new 

@@ -8,18 +8,16 @@
     <% end %>
 </h2>
 
-    <div><form>
-        <input type="button" value="Print Attendance Record" onClick="window.print()">
-    </form></div><br>
-
+<div><form>
+    <input type="button" value="Print Attendance Record" onClick="window.print()">
+</form></div><br>
 
 <div class="alert alert-info error_explanation">
   <%= flash[:notice] %>
 </div>
 
-<% if @record == "All Courses" %>
-    <div>
-    <h3>Filter Attendance Records:</h3>
+<div>
+<h3>Filter Attendance Records:</h3>
     <%= form_tag(attendances_path, method: 'get') do %>
          <!-- new code: filter by course -->
         <%= label_tag :course_id, "By Course" %>
@@ -30,10 +28,10 @@
         <%= select_tag :user_id, options_from_collection_for_select(User.all_users('student'), :id, :name), include_blank: true %>
         <%= submit_tag "Filter" %>
     <% end %>
-    </div>
-    <br>
-<% end %>
-
+    <%= form_tag(attendances_path, method: 'get') do %>
+        <%= submit_tag "Clear Filters" %>
+    <% end %>
+</div><br>
 
 <table>
     <tr>

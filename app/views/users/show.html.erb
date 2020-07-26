@@ -71,27 +71,27 @@
             <tr>
                 <td><%= course.time %></td>
                 <% if  course.scheduled_on?("Mon") %>
-                    <td><%= link_to course.name, course_path(course) %></td>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
                     <% else %>
                     <td></td>
                 <% end %>
                 <% if  course.scheduled_on?("Tue") %>
-                    <td><%= link_to course.name, course_path(course) %></td>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
                     <% else %>
                     <td></td>
                 <% end %>
                 <% if  course.scheduled_on?("Wed") %>
-                    <td><%= link_to course.name, course_path(course) %></td>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
                     <% else %>
                     <td></td>
                 <% end %>
                 <% if  course.scheduled_on?("Thu") %>
-                    <td><%= link_to course.name, course_path(course) %></td>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
                     <% else %>
                     <td></td>
                 <% end %>
                 <% if  course.scheduled_on?("Fri") %>
-                    <td><%= link_to course.name, course_path(course) %></td>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
                     <% else %>
                     <td></td>
                 <% end %>

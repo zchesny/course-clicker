@@ -4,7 +4,12 @@ class UsersController < ApplicationController
 
     before_action :require_admin, only: :index
     def index 
-        @users = User.all
+        if !params[:role].blank?
+            flash[:alert] = params[:role]
+            @users = User.where(role: params[:role])
+        else 
+            @users = User.all
+        end
     end 
 
     before_action :admin_registration, only: :new
