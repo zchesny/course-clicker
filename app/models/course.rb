@@ -67,7 +67,7 @@ class Course < ApplicationRecord
     end 
 
     def self.locations 
-        self.distinct.pluck(:location)
+        self.distinct.pluck(:location).sort
     end 
 
     def self.filter_by_schedule(courses, schedule)
