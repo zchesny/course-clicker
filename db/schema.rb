@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_08_05_051248) do
+=======
+ActiveRecord::Schema.define(version: 2020_08_05_014822) do
+>>>>>>> df7056d... nonworking date with enrollment
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,7 +94,10 @@ ActiveRecord::Schema.define(version: 2020_08_05_051248) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "date"
+<<<<<<< HEAD
     t.string "grade", default: "N/A"
+=======
+>>>>>>> df7056d... nonworking date with enrollment
   end
 
   create_table "users", force: :cascade do |t|

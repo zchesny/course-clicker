@@ -18,8 +18,11 @@ class CoursesController < ApplicationController
     end 
 
     def create 
+        binding.pry
         @course = Course.new(course_params)
         @course.weekly_schedule_attribute = params[:course][:weekly_schedule]
+        date = course_params[:user_courses].to_h.map{|k, v| "#{v}"}.join('-')
+        UserCourse.set_user_courses_date(@course.user_ids, @course.id, date)
         if @course.save
             redirect_to course_path(@course), notice: "#{@course.name} was successfully created."
         else 
@@ -72,7 +75,8 @@ class CoursesController < ApplicationController
             :start_time,
             :duration,
             :end_time,
-            user_ids: []
+            user_ids: [],
+            user_courses: ["date(1i)", "date(2i)", "date(3i)"]
         )
     end 
 end

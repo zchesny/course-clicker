@@ -27,10 +27,11 @@
         <%= label_tag :time, "By Time"%>
         <%= select_tag :time, options_for_select(Course.start_times), include_blank: true %>
 
-        <!-- new code: filter by student -->
+        <!-- new code: filter by location -->
         <%= label_tag :location, "By Location"%>
         <%= select_tag :location, options_for_select(Course.locations), include_blank: true %>
 
+        <!-- new code: filter by teacher -->
         <%= label_tag :user_id, "By Teacher"%>
         <%= select_tag :user_id, options_from_collection_for_select(User.all_users('teacher'), :id, :name), include_blank: true %>
 

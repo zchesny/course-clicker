@@ -1,3 +1,5 @@
+require 'securerandom'
+
 class SessionsController < ApplicationController
     def new 
         if logged_in?

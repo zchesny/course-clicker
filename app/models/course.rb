@@ -3,6 +3,7 @@ class Course < ApplicationRecord
     has_many :users, through: :user_courses 
 
     has_many :attendances
+    accepts_nested_attributes_for :attendances
 
     validates :name, presence: true
     validates :name, uniqueness: true
@@ -14,6 +15,8 @@ class Course < ApplicationRecord
     validate :validate_user_count
 
     # scope :filter_by_teacher, -> (user_id) {joins(:users).where(user_id: user_id)}
+    def user_courses=(user_courses)
+    end 
 
     def validate_user_count
       errors.add(:users, " - The number of enrolled students is beyond course capacity") if get_users_count('student') > capacity
