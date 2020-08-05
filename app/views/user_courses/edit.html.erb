@@ -1,0 +1,7 @@
+<%= form_for(@user_course) do |f| %>
+    <%= f.label :grade %>
+    <%= f.select(:grade, ['In Progress', 'Excellent', 'Satisfactory', 'Needs Improvement', 'Unsatisfactory'])%><br>
+
+    <%= f.submit "Submit Grade" %>
+
+<% end %>

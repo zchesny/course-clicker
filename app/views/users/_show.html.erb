@@ -30,6 +30,10 @@
         </p>
     <% end %>
 
+    <div><form>
+        <input type="button" value="Print Weekly Schedule" onClick="window.print()">
+    </form></div><br>
+
     <h3>Today's Schedule (<%= @user.get_today %>):</h3>
     <table>
         <tr>
@@ -52,57 +56,49 @@
 
 
     <br>
-    <h3>Weekly Schedule:</h3>
-    <table>
-        <tr>
-        <th>Mon</th>
-        <th>Tue</th>
-        <th>Wed</th>
-        <th>Thu</th>
-        <th>Fri</th>
-        <th>Sat</th>
-        <th>Sun</th>
-        </tr>
-        <% @user.courses.each do |course| %>
-        <tr>
-            <% if  course.scheduled_on?("Mon") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
+    <div class="print">
+        <h3><%= @user.name %>'s Weekly Schedule:</h3>
+        <table>
+            <tr>
+            <th>Time</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            </tr>
+        <% Course.sort_by_time(@user.courses).each do |course| %>
+            <tr>
+                <td><%= course.time %></td>
+                <% if  course.scheduled_on?("Mon") %>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Tue") %>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Wed") %>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Thu") %>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+                <% if  course.scheduled_on?("Fri") %>
+                    <td><%= link_to course.name, course_path(course) %> <br><%= course.location %> </td>
+                    <% else %>
+                    <td></td>
+                <% end %>
+            </tr>
             <% end %>
-            <% if  course.scheduled_on?("Tue") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Wed") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Thu") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Fri") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Sat") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-            <% if  course.scheduled_on?("Sun") %>
-                <td><%= course.name %></td>
-                <% else %>
-                <td></td>
-            <% end %>
-        </tr>
-        <% end %>
-    </table>
+        </table>
+    </div>
 
     <br>
     <h3>Your Courses:</h3>
@@ -113,6 +109,9 @@
                 <th>Time</th>
                 <th>Teachers</th>
                 <th>Enrollment</th>
+                <%= if @user.role?('student') %>
+                    <th>Current Grade</th>
+                <% end %>
                 <% if current_user.role?('teacher') %>
                     <th>Options</th>
                 <% end %>
@@ -124,10 +123,14 @@
                     <td><%= course.time %></td>
                     <td><%= course.role_list('teacher') %></td>
                     <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
+                    <%= if @user.role?('student') %>
+                        <th>Current Grade</th>
+                    <% end %>
                     <% if current_user.role?('teacher') %>
                         <td>
                             <%= link_to 'Edit', edit_course_path(course) %> | 
-                            <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %>
+                            <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %> |
+                            <%= link_to 'Take Attendance', new_course_attendance_path(course) %>
                         </td>
                     <% end %>
                 </tr>

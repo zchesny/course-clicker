@@ -27,4 +27,6 @@ Rails.application.routes.draw do
     resources :attendances, only: [:index]
   end 
 
+  resources :user_courses, only: [:edit, :update]
+
 end
