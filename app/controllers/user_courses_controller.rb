@@ -6,7 +6,7 @@ class UserCoursesController < ApplicationController
     def update 
         if @user_course.update(user_course_params)
             @user_course.save
-            redirect_to user_path(@user_course.user), notice: "#{@user_course.user.name}'s grade for #{@user_course.course.name} was successfully updated."
+            redirect_to course_path(@user_course.course), notice: "#{@user_course.user.name}'s grade for #{@user_course.course.name} was successfully updated."
         else 
             render :edit 
         end 

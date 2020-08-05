@@ -109,7 +109,7 @@
                 <th>Time</th>
                 <th>Teachers</th>
                 <th>Enrollment</th>
-                <%= if @user.role?('student') %>
+                <% if @user.role?('student') %>
                     <th>Current Grade</th>
                 <% end %>
                 <% if current_user.role?('teacher') %>
@@ -123,8 +123,8 @@
                     <td><%= course.time %></td>
                     <td><%= course.role_list('teacher') %></td>
                     <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
-                    <%= if @user.role?('student') %>
-                        <th>Current Grade</th>
+                    <% if @user.role?('student') %>
+                        <td><%= UserCourse.get_grade(@user, course.id)%></td>
                     <% end %>
                     <% if current_user.role?('teacher') %>
                         <td>
