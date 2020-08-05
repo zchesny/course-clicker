@@ -58,12 +58,6 @@
         <% end %>
     <br>
 
-    <!-- new code: add date to user_courses ("Enrollment") -->
-    <p><%= f.fields_for :user_courses do |enrollment_form| %>
-      <%= enrollment_form.label :date, "Enrollment Date" %>
-      <%= enrollment_form.date_select :date, required: true %>
-    <% end %></p>
-
     <h3 style="float: left">Students - </h3>
     <h3 style="font-weight: normal"> You may optionally enroll students now or you can do so at a later time</h3>
         <% User.all_users('student').each do |student| %>
