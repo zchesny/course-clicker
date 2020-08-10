@@ -42,15 +42,19 @@
         <tr>
             <th>Count</th>
             <th>Name</th>
-            <th>Current Grade</th>
-            <th>Update Grade</th>
+            <% if admin_or_teacher_ownership?(@course) %>
+                <th>Current Grade</th>
+                <th>Update Grade</th>
+            <% end %>
         </tr>
     <% @course.get_users('student').each.with_index(1) do |student, index| %>
         <tr>
             <td><%= index %></td>
-            <td><%= student.name %></td>  
-            <td><%= UserCourse.get_grade(student.id, @course.id) %></td>
-            <td><%= link_to "Update Grade", edit_user_course_path(UserCourse.find_by_user_course(student.id, @course.id)) %></td>
+            <td><%= student.name %></td> 
+            <% if admin_or_teacher_ownership?(@course) %> 
+                <td><%= UserCourse.get_grade(student.id, @course.id) %></td>
+                <td><%= link_to "Update Grade", edit_user_course_path(UserCourse.find_by_user_course(student.id, @course.id)) %></td>
+            <% end %>
         </tr> 
     <% end %>
     </table>

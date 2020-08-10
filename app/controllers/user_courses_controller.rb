@@ -1,8 +1,14 @@
 class UserCoursesController < ApplicationController
     before_action :set_user_course, only: [:edit, :update]
+    before_action :require_login
+    before_action :require_teacher, only: [:new, :create, :edit, :update, :destroy]
+
     def edit 
+        @course = @user_course.course 
+        require_ownership
     end 
 
+    # example url: http://localhost:3000/user_courses/61/edit
     def update 
         if @user_course.update(user_course_params)
             @user_course.save

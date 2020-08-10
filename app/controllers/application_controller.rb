@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
     def require_ownership
         return redirect_to root_path, notice: 'Sorry, you must be logged in for access.' if !logged_in?	
         if !((current_user.role?('admin')) || (current_user.role?('teacher') && current_user.courses.include?(@course)))
-            redirect_to user_path(current_user), notice: 'Sorry, you must teach this course or be and Admin for access.' 
+            redirect_to user_path(current_user), notice: 'Sorry, you must teach this course or be an Admin for access.' 
         end
         # we don't redirect (if admin) or (if teacher and teacher.courses.include?(course))
     end 

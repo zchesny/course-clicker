@@ -36,6 +36,7 @@ class AttendancesController < ApplicationController
         end 
     end 
 
+    # example url: http://localhost:3000/courses/15/attendances/new
     def new 
         # only if logged in as admin or teacher 
         @attendance = Attendance.new(course_id: params[:course_id])
