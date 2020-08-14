@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # active record scope method with route to show functionality 
+  get '/users/most_courses', to: 'users#most_courses'
+
   resources :users
   resources :courses
   

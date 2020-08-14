@@ -31,4 +31,10 @@ class User < ApplicationRecord
         self.all.sort_by{|u| u.name}
     end 
 
+    def self.most_courses 
+        self.all.max_by do |u|
+            u.courses.size
+        end 
+    end 
+
 end

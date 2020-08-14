@@ -2,6 +2,9 @@ class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :require_login, only: [:index, :show, :edit, :update, :destroy]
 
+    def most_courses 
+    end 
+
     before_action :require_admin, only: :index
     def index 
         if !params[:role].blank?
