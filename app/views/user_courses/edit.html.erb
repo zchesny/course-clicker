@@ -1,8 +1,8 @@
-<h2>Grade for <%= @user_course.user.name %> in <%= @user_course.course.name %></h2>
+<h2>Progress for <%= @user_course.user.name %> in <%= @user_course.course.name %></h2>
 <%= form_for(@user_course) do |f| %>
-    <%= f.label :grade %>
-    <%= f.select(:grade, ['N/A', 'In Progress', 'Excellent', 'Satisfactory', 'Needs Improvement', 'Unsatisfactory'])%><br>
+    <%= f.label :grade, 'Progress' %>
+    <%= f.text_area :grade, placeholder: "Enter Progress Status Here", required: true %><br>
 
-    <%= f.submit "Update Grade" %>
+    <%= f.submit "Update Progress" %>
 
 <% end %>

@@ -24,7 +24,7 @@ class User < ApplicationRecord
     end 
 
     def self.all_users(role)
-        self.all.select{|user| user.role?(role)}
+        self.all.select{|user| user.role?(role)}.sort_by{|u| u.name}
     end 
 
     def self.sort_by_name

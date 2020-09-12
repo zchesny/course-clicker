@@ -20,7 +20,7 @@ class Course < ApplicationRecord
     end
 
     def get_users(role) 
-        users.select{|user| user.role?(role)}
+        users.select{|user| user.role?(role)}.sort_by{|u| u.name}
     end 
 
     def get_user_ids(role) 

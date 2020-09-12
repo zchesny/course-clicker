@@ -108,11 +108,11 @@
                 <th>Schedule</th>
                 <th>Time</th>
                 <th>Teachers</th>
-                <th>Enrollment</th>
                 <% if @user.role?('student') %>
-                    <th>Current Grade</th>
+                    <th>Current Progress</th>
                 <% end %>
                 <% if current_user.role?('teacher') %>
+                    <th>Enrollment</th>
                     <th>Options</th>
                 <% end %>
             </tr>
@@ -122,11 +122,11 @@
                     <td><%= course.weekly_schedule %></td>
                     <td><%= course.time %></td>
                     <td><%= course.role_list('teacher') %></td>
-                    <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
                     <% if @user.role?('student') %>
                         <td><%= UserCourse.get_grade(@user, course.id)%></td>
                     <% end %>
                     <% if current_user.role?('teacher') %>
+                        <td>(<%= course.get_users_count('student') %>/<%= course.capacity %> students)</td>
                         <td>
                             <%= link_to 'Edit', edit_course_path(course) %> | 
                             <%= link_to 'Delete', course, method: :delete, data: { confirm: 'Are you sure?' } %> |
