@@ -14,6 +14,7 @@ class Course < ApplicationRecord
     validate :validate_user_count
 
     # scope :filter_by_teacher, -> (user_id) {joins(:users).where(user_id: user_id)}
+    # scope :by_name, -> {where("name LIKE ")}
 
     def validate_user_count
       errors.add(:users, " - The number of enrolled students is beyond course capacity") if get_users_count('student') > capacity

@@ -17,6 +17,14 @@
 <% end %>
 
 <div>
+    <%= form_tag(courses_path, method: 'get') do %>
+        <%= label_tag(:q, "Search course names") %>
+        <%= text_field_tag(:q)%>
+        <%= submit_tag("Search")%>
+    <% end %>
+</div>
+
+<div>
 <h3>Filter Courses:</h3>
     <%= form_tag(courses_path, method: 'get') do %>
          <!-- new code: filter by course -->
