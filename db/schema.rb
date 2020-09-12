@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2020_08_05_051248) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "admins", force: :cascade do |t|
-    t.string "name"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "attendances", force: :cascade do |t|
     t.integer "course_id"
     t.date "date"
@@ -38,34 +31,6 @@ ActiveRecord::Schema.define(version: 2020_08_05_051248) do
     t.string "weekly_schedule"
     t.time "military_start_time"
     t.integer "duration"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "enrollments", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "student_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.string "name"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "teacher_courses", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "teacher_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "teachers", force: :cascade do |t|
-    t.string "name"
-    t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
