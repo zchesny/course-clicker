@@ -1,6 +1,5 @@
 class Cleanup < ActiveRecord::Migration[6.0]
   def change
-    drop_table :admins
     drop_table :enrollments 
     drop_table :students 
     drop_table :teacher_courses 
