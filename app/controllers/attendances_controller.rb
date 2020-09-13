@@ -40,13 +40,15 @@ class AttendancesController < ApplicationController
     def new 
         # only if logged in as admin or teacher 
         @attendance = Attendance.new(course_id: params[:course_id])
-        @course = @attendance.course
+        @attendance.course.get_users('student').each do |student|
+            @attendance.attendance_entries.build(user_id: student.id)
+        end 
         require_ownership
     end 
 
     def create 
         @attendance = Attendance.new(attendance_params)
-        @attendance.set_absentees(@attendance.attendee_ids)
+        # @attendance.set_absentees(@attendance.attendee_ids)
 
         if @attendance.save
             redirect_to course_attendances_path(@attendance.course), notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully taken."
@@ -56,36 +58,17 @@ class AttendancesController < ApplicationController
     end 
 
     def show 
-         # course attendance index 
-        if params[:course_id]
-            @record = Course.find(params[:course_id])
-            # if student, don't allow unless its their course
-            # http://localhost:3000/courses/2/attendances/15
-            if current_user.role?('student') && !current_user.courses.include?(@record)
-                redirect_to user_path(current_user), notice: 'Sorry, you may only view attendance for courses in which you are enrolled.'
-            end
-        # student attendance index 
-        elsif params[:user_id]
-            @record = User.find(params[:user_id])
-            @user = @record
-            # if student, don't allow to view other students 
-            # http://localhost:3000/users/6/attendances
-            if current_user.role?('student') && @user != current_user
-                redirect_to user_path(current_user), notice: 'Sorry, you may only view your own attendance record.'
-            end
-        end 
+        require_ownership
     end 
 
     def edit 
-        @course = Course.find(params[:course_id])
         @attendance = Attendance.find(params[:id])
-        @course = @attendance.course
         require_ownership
     end 
 
     def update 
         if @attendance.update(attendance_params)
-            @attendance.set_absentees(@attendance.attendee_ids)
+            # @attendance.set_absentees(@attendance.attendee_ids)
             @attendance.save
             redirect_to course_attendances_path(@attendance.course), notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully updated."
         else 
@@ -110,7 +93,11 @@ class AttendancesController < ApplicationController
         params.require(:attendance).permit(
             :course_id,
             :date,
-            attendee_ids: []
+            attendee_ids: [],
+            attendance_entries_attributes: [
+                :user_id,
+                :status 
+            ]
         )
     end 
 end

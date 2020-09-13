@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   # atttendance 
   resources :attendances, only: [:index, :create, :update, :destroy]
   resources :courses, only: [:show] do
-    # add destroy attendances
     resources :attendances, only: [:show, :index, :new, :edit]
   end
 

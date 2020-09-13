@@ -1,12 +1,18 @@
 <h2>Record for <%= @attendance.course.name %> on <%= format_date(@attendance.date) %></h2>
 
 <h4 class="present">Present</h4>
-<ol><% @attendance.attendees.each do |student| %>
+<ol><% @attendance.get_users('present').each do |student| %>
+    <li><%= student.name %></li>
+<% end %></ol>
+<br>
+
+<h4 class="present">Excused</h4>
+<ol><% @attendance.get_users('excused').each do |student| %>
     <li><%= student.name %></li>
 <% end %></ol>
 <br>
 
 <h4 class="absent">Absent</h4>
-<ol><% @attendance.absentees.each do |student| %>
+<ol><% @attendance.get_users('absent').each do |student| %>
     <li><%= student.name %></li>
 <% end %></ol>

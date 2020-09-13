@@ -15,6 +15,44 @@
 
 <%= form_for(@attendance) do |f| %>
 
+  <%= f.hidden_field :course_id, value: @attendance.course.id %>
+
+  <%= f.label :date %>
+  <%= f.date_select :date, required: true %>
+
+  <br>
+  <h3>Students: </h3>
+    <table>
+        <tr>
+            <th>Count</th>
+            <th>Name</th>
+            <th>Attendance</th>
+        </tr>
+      <%= f.fields_for :attendance_entries do |ae| %>
+        <%= ae.hidden_field :user_id, value: ae.object.user_id %>
+        <tr>
+          <td><%= ae.index + 1 %></td>
+          <td><%= ae.object.user.name %></td>
+          <td>
+            <%= ae.radio_button :status, 'present', :checked => true %> 
+            <%= label :status, 'Present' %>
+            <%= ae.radio_button :status, 'excused' %>
+            <%= label :status, 'Excused' %>
+            <%= ae.radio_button :status, 'absent' %>
+            <%= label :status, 'Absent' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    
+    <br>
+    <%= f.submit "Submit Attendance" %>
+<% end %>
+
+<!-- old attendance form code  
+
+<%= form_for(@attendance) do |f| %>
+
     <%= f.hidden_field :course_id, value: @attendance.course.id %>
 
     <%= f.label :date %>
@@ -29,3 +67,4 @@
     <%= f.submit "Submit Attendance" %>
 
 <% end %>
+-->

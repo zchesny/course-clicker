@@ -1,5 +1,8 @@
 class Attendance < ApplicationRecord
     belongs_to :course 
+    has_many :attendance_entries 
+
+    has_many :users, through: :attendance_entries 
 
     has_many :user_attendances
     has_many :user_absences 
@@ -9,10 +12,16 @@ class Attendance < ApplicationRecord
     validates :date, presence: true 
     validates :date, uniqueness: {scope: :course,  message: " - Course attendance on this date has already been taken."}
 
-    def user_ids
-        self.attendee_ids + self.absentee_ids
+    accepts_nested_attributes_for :attendance_entries
+
+    def get_users(status)
+        attendance_entries.select{|ae| ae.status == status}.map{|ae| ae.user}.sort_by{|u| u.name}
     end 
 
+    def absentee_list
+        get_users('absent').collect{|absentee| absentee.name}.join(', ')
+    end 
+    
     def self.find_by_course_id(course_id)
         # self.all.select{|attendance| attendance.course_id == course_id}
         self.where(course_id: course_id)
@@ -27,21 +36,6 @@ class Attendance < ApplicationRecord
     def self.find_by_user_and_course(user_id, course_id)
         # attendances = self.find_by_user_id(user_id)
         self.where(course_id: course_id).select{|attendance| attendance.user_ids.include?(user_id)}
-    end 
-
-    # fixme: breaks if nil
-    def set_absentees(attendee_ids)
-        all_student_ids = course.get_user_ids('student')
-        self.absentee_ids = all_student_ids - attendee_ids
-    end 
-
-    # fixme? breaks if .join is called on empty?
-    def attendee_list
-        self.attendees.collect{|attendee| attendee.name}.join(', ')
-    end 
-
-    def absentee_list
-        self.absentees.collect{|absentee| absentee.name}.join(', ')
     end 
 
     def self.sort_by_date(attendances)

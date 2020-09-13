@@ -39,6 +39,7 @@
         <th>Date</th>
         <% if request.env['PATH_INFO'].include?("users") || @user %>
             <th class="present">Present</th>
+            <th class="present">Excused</th>
         <% end %>
         <th class="absent">Absent</th>
         <% if current_user.role?('admin') || current_user.role?('teacher') %>
@@ -50,10 +51,16 @@
             <td><%= link_to attendance.course.name, course_path(attendance.course) %></td>
             <td><%= format_date(attendance.date) %></td>
             <% if request.env['PATH_INFO'].include?("users") || @user %>
-                <% if attendance.attendees.include?(@user) %>
+                <% if attendance.get_users('present').include?(@user) %>
+                    <td class="present">X</td>
+                    <td></td>
+                    <td></td>
+                <% elsif attendance.get_users('excused').include?(@user) %>
+                    <td></td>
                     <td class="present">X</td>
                     <td></td>
                 <% else %>
+                    <td></td>
                     <td></td>
                     <td class="absent">X</td>
                 <% end %>
