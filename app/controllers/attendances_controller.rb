@@ -48,8 +48,6 @@ class AttendancesController < ApplicationController
 
     def create 
         @attendance = Attendance.new(attendance_params)
-        # @attendance.set_absentees(@attendance.attendee_ids)
-
         if @attendance.save
             redirect_to course_attendances_path(@attendance.course), notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully taken."
         else 
@@ -77,8 +75,6 @@ class AttendancesController < ApplicationController
     end 
 
     def destroy 
-        # todo: fix redirect depending on role 
-        # todo: redirect to root_path (unless admin, then redirect to users_path)
         @attendance.destroy
         redirect_to attendances_path, notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully deleted."
     end 

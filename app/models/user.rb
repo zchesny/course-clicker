@@ -1,11 +1,7 @@
 class User < ApplicationRecord
     has_many :user_courses 
     has_many :courses, through: :user_courses 
-
     has_many :attendance_entries 
-
-    # has_many :user_attendances
-    # has_many :attendances, through: :user_attendances 
 
     has_secure_password
     validates :name, presence: true 
