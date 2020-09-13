@@ -87,10 +87,12 @@ class AttendancesController < ApplicationController
 
     def attendance_params 
         params.require(:attendance).permit(
+            :id, 
             :course_id,
             :date,
             attendee_ids: [],
             attendance_entries_attributes: [
+                :id, 
                 :user_id,
                 :status 
             ]

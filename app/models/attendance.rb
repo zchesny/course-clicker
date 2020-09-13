@@ -6,7 +6,7 @@ class Attendance < ApplicationRecord
     validates :date, presence: true 
     validates :date, uniqueness: {scope: :course,  message: " - Course attendance on this date has already been taken."}
 
-    accepts_nested_attributes_for :attendance_entries
+    accepts_nested_attributes_for :attendance_entries, allow_destroy: true
 
     def get_users(status)
         attendance_entries.select{|ae| ae.status == status}.map{|ae| ae.user}.sort_by{|u| u.name}
