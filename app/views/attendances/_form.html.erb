@@ -48,23 +48,3 @@
     <br>
     <%= f.submit "Submit Attendance" %>
 <% end %>
-
-<!-- old attendance form code  
-
-<%= form_for(@attendance) do |f| %>
-
-    <%= f.hidden_field :course_id, value: @attendance.course.id %>
-
-    <%= f.label :date %>
-    <%= f.date_select :date, required: true %>
-
-    <h3>Students: </h3>
-    <p>Please select students who are present.</p>
-    <ol><% @attendance.course.get_users('student').each do |student| %>
-        <li> <%= f.check_box :attendee_ids, {multiple: true}, student.id, nil %><%= student.name %><br></li>
-    <% end %></ol>
-
-    <%= f.submit "Submit Attendance" %>
-
-<% end %>
--->
