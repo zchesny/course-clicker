@@ -19,7 +19,7 @@ class Course < ApplicationRecord
     end
 
     def get_users(role) 
-        users.select{|user| user.role?(role)}.sort_by{|u| u.name}
+        users.select{|user| user.role?(role)}.sort_by{|u| u.name.downcase}
     end 
 
     def get_user_ids(role) 
@@ -60,7 +60,7 @@ class Course < ApplicationRecord
     end
 
     def self.sort_by_name(courses)
-        courses.sort_by{|c| c.name}
+        courses.sort_by{|c| c.name.downcase}
     end
 
     def self.start_times

@@ -22,11 +22,11 @@ class User < ApplicationRecord
     end 
 
     def self.all_users(role)
-        self.all.select{|user| user.role?(role)}.sort_by{|u| u.name}
+        self.all.select{|user| user.role?(role)}.sort_by{|u| u.name.downcase}
     end 
 
     def self.sort_by_name
-        self.all.sort_by{|u| u.name}
+        self.all.sort_by{|u| u.name.downcase}
     end 
 
 end
