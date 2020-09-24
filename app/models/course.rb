@@ -59,6 +59,10 @@ class Course < ApplicationRecord
         courses.sort_by{|c| c.military_start_time}
     end
 
+    def self.sort_by_name(courses)
+        courses.sort_by{|c| c.name}
+    end
+
     def self.start_times
         self.distinct.pluck(:military_start_time).sort.collect do |time|
             time.strftime("%I:%M %p")

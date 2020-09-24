@@ -55,7 +55,7 @@
     </tr>
 
     <% if @courses %>
-    <% Course.sort_by_time(@courses).each do |course| %>
+    <% Course.sort_by_name(@courses).each do |course| %>
         <tr>
             <td><%= link_to course.name, course_path(course) %></td>
             <td><%= course.weekly_schedule %></td>

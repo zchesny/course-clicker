@@ -27,7 +27,7 @@
     <%= f.number_field :capacity, placeholder: "Enter Capacity Here", required: true %><br>
 
     <%= f.label :location, "Location:" %>
-    <%= f.select(:location, ['TBD', 'Barn', 'Computer Lab', 'Daehler', 'Greenhouse', 'Music Room', 'Oikos', 'Palmer', 'WTC'])%><br><br>
+    <%= f.select(:location, ['TBD', 'Barn', 'Boardroom', 'Computer Lab', 'Daehler', 'Greenhouse', 'Gym', 'Kitchen', 'Music Room', 'Oikos', 'Palmer Kitchen', 'Palmer Stage', 'WTC Main', 'WTC 1'])%><br><br>
 
     <%= f.label :weekly_schedule, 'Schedule:' %>
     
@@ -45,7 +45,7 @@
     <%= f.time_field :military_start_time, required: true %>
 
     <%= f.label :duration, "Duration:" %>
-    <%= f.select(:duration, [['50 min', 50]]) %><br><br>
+    <%= f.select(:duration, [['50 min', 50], ['30 min', 30]]) %><br><br>
 
     <h3 style="float: left">Teachers - </h3>
     <h3 style="font-weight: normal"> You may optionally add other teachers now or you can do so at a later time</h3>
