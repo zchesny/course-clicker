@@ -41,7 +41,7 @@
         <th>Attendance</th>
         <th>User Options</th>
     </tr>
-    <% @users.sort_by{|u| u.name}.each do |user| %>
+    <% @users.sort_by{|u| u.name.downcase}.each do |user| %>
         <tr>
             <td><%= link_to user.name, user_path(user) %></td>
             <td><%= user.role %></td>
