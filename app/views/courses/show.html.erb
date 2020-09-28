@@ -50,7 +50,11 @@
     <% @course.get_users('student').each.with_index(1) do |student, index| %>
         <tr>
             <td><%= index %></td>
-            <td><%= student.name %></td> 
+            <% if current_user.role?('admin') %>
+                <td><%= link_to student.name, student  %></td> 
+            <% else %>
+                <td><%= student.name %></td> 
+            <% end %>
             <% if admin_or_teacher_ownership?(@course) %> 
                 <td><%= UserCourse.get_grade(student.id, @course.id) %></td>
                 <td><%= link_to "Update Progress", edit_user_course_path(UserCourse.find_by_user_course(student.id, @course.id)) %></td>
