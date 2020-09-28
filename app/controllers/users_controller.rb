@@ -34,6 +34,12 @@ class UsersController < ApplicationController
     end 
 
     def show 
+        sinfo = @user.get_schedule_hash()
+        overlap = sinfo[0]
+        @shash = sinfo[1]
+        if overlap
+            flash[:notice] = 'Warning: There may be a scheduling conflict. Please check weekly schedule for overlapping class times.'
+        end 
         if current_user != @user 
             redirect_to user_path(current_user), notice: 'Sorry, an Admin role is required for access.' unless current_user.role?('admin')
         end 

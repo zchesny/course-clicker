@@ -28,5 +28,27 @@ class User < ApplicationRecord
     def self.sort_by_name
         self.all.sort_by{|u| u.name.downcase}
     end 
+    
+    def get_schedule_hash()
+        overlap = false  
+        shash = {} 
+        Course.sort_by_time(self.courses).each do |course| 
+            ["Mon", "Tue", "Wed", "Thu", "Fri"].each do |day| 
+                if course.scheduled_on?(day) 
+                    if shash[course.time] and shash[course.time][day]
+                        dlist = shash[course.time][day]
+                        dlist << course 
+                        overlap = true 
+                    elsif shash[course.time]
+                        thash = shash[course.time] 
+                        thash[day] = [course]
+                    else
+                        shash[course.time] = {day => [course]}
+                    end 
+                end 
+            end 
+        end 
+        [overlap, shash] 
+    end 
 
 end
