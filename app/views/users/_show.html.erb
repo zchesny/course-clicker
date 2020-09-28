@@ -106,7 +106,7 @@
                     <th>Options</th>
                 <% end %>
             </tr>
-            <% Course.sort_by_time(@user.courses).each do |course| %>
+            <% Course.sort_by_name(@user.courses).each do |course| %>
                 <tr>
                     <td><%= link_to course.name, course_path(course) %></a></td>
                     <td><%= course.weekly_schedule %></td>
