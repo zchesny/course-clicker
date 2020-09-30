@@ -39,7 +39,8 @@ class AttendancesController < ApplicationController
     # example url: http://localhost:3000/courses/15/attendances/new
     def new 
         # only if logged in as admin or teacher 
-        @attendance = Attendance.new(course_id: params[:course_id])
+        @course = Course.find(params[:course_id])
+        @attendance = Attendance.new(course_id: @course.id)
         @attendance.course.get_users('student').each do |student|
             @attendance.attendance_entries.build(user_id: student.id)
         end 
@@ -56,11 +57,13 @@ class AttendancesController < ApplicationController
     end 
 
     def show 
+        @course = Course.find(params[:course_id])
         require_ownership
     end 
 
     def edit 
         @attendance = Attendance.find(params[:id])
+        @course = @attendance.course
         require_ownership
     end 
 
