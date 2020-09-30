@@ -21,7 +21,7 @@
     <%= form_tag(attendances_path, method: 'get') do %>
          <!-- new code: filter by course -->
         <%= label_tag :course_id, "By Course" %>
-        <%= select_tag :course_id, options_from_collection_for_select(Course.all, :id, :name), include_blank: true %>
+        <%= select_tag :course_id, options_from_collection_for_select(Course.sort_by_name(Course.all), :id, :name), include_blank: true %>
 
         <!-- new code: filter by student -->
         <%= label_tag :user_id, "By Student"%>
