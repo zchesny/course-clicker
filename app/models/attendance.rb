@@ -9,8 +9,8 @@ class Attendance < ApplicationRecord
     accepts_nested_attributes_for :attendance_entries, allow_destroy: true
 
     def get_users(status)
-        attendance_entries.select{|ae| ae.status == status}.map{|ae| ae.user}.sort_by{|u| u.name}
-    end 
+        attendance_entries.select{|ae| ae.status == status}.map{|ae| ae.user}.compact.sort_by{|u| u.name}
+    end
 
     def absentee_list
         get_users('absent').collect{|absentee| absentee.name}.join(', ')
