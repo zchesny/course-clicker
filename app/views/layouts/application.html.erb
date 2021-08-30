@@ -33,6 +33,7 @@
           <th><%= render 'sessions/logout' %></th>
         <% elsif current_user.role?('teacher') %>
           <th><%= link_to "Courses", courses_path %></th>
+          <th><%= link_to "Users", users_path %></th>
           <th><%= link_to "Create Course", new_course_path %></th>
           <th><%= link_to "Attendance", attendances_path %></th>
           <th><%= link_to "Home", user_path(current_user) %></th>
