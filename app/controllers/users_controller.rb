@@ -2,7 +2,9 @@ class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :require_login, only: [:index, :show, :edit, :update, :destroy]
 
-    before_action :require_admin, only: :index
+    # 8/29/21 originally, but changed in line 8
+    # before_action :require_admin, only: :index
+    before_action :require_teacher, only: :index
     def index 
         if !params[:role].blank?
             flash[:alert] = params[:role]
@@ -41,7 +43,7 @@ class UsersController < ApplicationController
             flash.now.notice = 'Warning: There may be a scheduling conflict. Please check weekly schedule for overlapping class times.'
         end 
         if current_user != @user 
-            redirect_to user_path(current_user), notice: 'Sorry, an Admin role is required for access.' unless current_user.role?('admin')
+            redirect_to user_path(current_user), notice: 'Sorry, an Admin or Teacher role is required for access.' unless (current_user.role?('admin') or current_user.role?('teacher'))
         end 
     end 
 

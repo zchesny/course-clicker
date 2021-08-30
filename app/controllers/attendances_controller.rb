@@ -66,6 +66,7 @@ class AttendancesController < ApplicationController
     end 
 
     def update 
+        # binding.pry
         if @attendance.update(attendance_params)
             # @attendance.set_absentees(@attendance.attendee_ids)
             @attendance.save

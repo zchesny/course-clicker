@@ -10,6 +10,10 @@
         <br>
         <h2>Viewing <%= @user.name %>'s Homepage [<%= @user.role %>] </h2>
     <% end %>
+
+    <% elsif current_user.role?('teacher') %>
+        <h2>Viewing <%= @user.name %>'s Homepage [<%= @user.role %>] </h2>
+    <% end %>
     
     <% if @user.role?('student') %>
         <p>
