@@ -11,7 +11,7 @@
         <h2>Viewing <%= @user.name %>'s Homepage [<%= @user.role %>] </h2>
     <% end %>
 
-    <% elsif current_user.role?('teacher') %>
+    <% if current_user.role?('teacher') %>
         <h2>Viewing <%= @user.name %>'s Homepage [<%= @user.role %>] </h2>
     <% end %>
     
