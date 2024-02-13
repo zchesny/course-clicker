@@ -89,4 +89,12 @@ class Course < ApplicationRecord
         courses.select{|course| course.user_ids.include?(teacher_id.to_i)}
     end
 
+    def self.first_course_id_sorted_by_name
+        # Use the first method to retrieve the first record after sorting by name
+        first_course = Course.order(name: :asc).first
+    
+        # Return the id of the first course or nil if there are no courses
+        first_course&.id
+    end
+
 end

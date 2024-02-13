@@ -30,11 +30,8 @@ class AttendancesController < ApplicationController
         # all attendance index
         else
             require_teacher
-            @record = "All Courses"
-            # Set the start date to one year ago from today
-            start_date = 1.year.ago.to_date
-            # Fetch only the necessary fields and order by date in the database query
-            @attendances = Attendance.where(date: start_date..Date.today).order(date: :desc).select(:id, :date, :course_id)
+            @record = Course.find(Course.first_course_id_sorted_by_name)
+            @attendances = Attendance.find_by_course_id(@record.id).sort_by_date
         end
     end
 
