@@ -78,8 +78,9 @@ class AttendancesController < ApplicationController
 
     def destroy 
         @attendance.destroy
-        flash[:notice] = "Attendance for #{attendance.course.name} on #{attendance.date} was successfully deleted."
-        render :index
+        # fixme: redirect to attendances_path is not working
+        # redirect_to attendances_path, notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully deleted."
+        redirect_to root_path, notice: "Attendance for #{@attendance.course.name} on #{@attendance.date} was successfully deleted."
     end
 
     private 
