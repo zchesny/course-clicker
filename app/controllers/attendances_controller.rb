@@ -31,7 +31,7 @@ class AttendancesController < ApplicationController
         else
             require_teacher
             @record = "All Courses"
-            @attendances = Attendance.all.sort_by_date.past_year.includes(:course, :users)
+            @attendances = Attendance.past_year.sort_by_date
         end
     end
 
