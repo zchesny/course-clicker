@@ -21,4 +21,5 @@ class Attendance < ApplicationRecord
     scope :find_by_course_id, ->(course_id) { where(course_id: course_id) }
     scope :find_by_user_id, ->(user_id) { joins(:users).where(users: { id: user_id }) }
     scope :find_by_user_and_course, ->(user_id, course_id) { find_by_course_id(course_id).find_by_user_id(user_id) }
+    scope :past_year, -> { where(date: (Date.today - 1.year)..Date.today) }
 end
