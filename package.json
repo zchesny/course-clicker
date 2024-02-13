@@ -1,0 +1,8 @@
+{
+  "name": "course-clicker",
+  "version": "1.0.0",
+  "description": "rainbow-acres",
+  "repository": "git@github.com:zchesny/course-clicker.git",
+  "author": "zchesny <z.chesny@gmail.com>",
+  "license": "MIT"
+}
