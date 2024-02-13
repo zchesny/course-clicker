@@ -4,7 +4,7 @@ class AttendancesController < ApplicationController
     before_action :require_teacher, only: [:new, :create, :edit, :update, :destroy]
     # before_action :require_ownership, only: [:new, :create, :edit, :update, :destroy]
 
-    def index 
+    def index
         #fixme: breaks if you filter by something that doesn't exist 
         # uses filter in /attendances, filter both
         if !params[:course_id].blank? && !params[:user_id].blank?
@@ -16,24 +16,24 @@ class AttendancesController < ApplicationController
         elsif !params[:course_id].blank?
             require_teacher
             @record = Course.find(params[:course_id])
-            @attendances = Attendance.sort_by_date(Attendance.find_by_course_id(@record.id))
-        # student attendance index 
+            @attendances = Attendance.find_by_course_id(@record.id).sort_by_date
+        # student attendance index
         elsif !params[:user_id].blank?
             # require ownership 
             @record = User.find(params[:user_id])
-            @user = @record 
+            @user = @record
             require_student
             if current_user.role?('student') && @user != current_user
                 redirect_to user_path(current_user), notice: 'Sorry, you may only view your own attendance record.'
             end
-            @attendances = Attendance.sort_by_date(Attendance.find_by_user_id(@record.id))
+            @attendances = Attendance.find_by_user_id(@record.id).sort_by_date
         # all attendance index
-        else  
+        else
             require_teacher
             @record = "All Courses"
-            @attendances = Attendance.sort_by_date(Attendance.all)
-        end 
-    end 
+            @attendances = Attendance.all.sort_by_date
+        end
+    end
 
     # example url: http://localhost:3000/courses/15/attendances/new
     def new 
