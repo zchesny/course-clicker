@@ -31,7 +31,10 @@ class AttendancesController < ApplicationController
         else
             require_teacher
             @record = "All Courses"
-            @attendances = Attendance.past_year.sort_by_date
+            # Set the start date to one year ago from today
+            start_date = 1.year.ago.to_date
+            # Fetch all attendances within the last year
+            @attendances = Attendance.where(date: start_date..Date.today).sort_by_date
         end
     end
 
