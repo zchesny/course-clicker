@@ -11,16 +11,12 @@ class AttendancesController < ApplicationController
             @user = User.find(params[:user_id])
             @course = Course.find(params[:course_id])
             @record = "#{@user.name} in #{@course.name}"
-            @attendances = Attendance.includes(:course, :users, :attendance_entries)
-                             .where(course_id: @course.id)
-                             .where(users: { id: @user.id })
+            @attendances = Attendance.find_by_user_and_course(@user.id, @course.id)
         # course attendance index
         elsif !params[:course_id].blank?
             require_teacher
             @record = Course.find(params[:course_id])
-            @attendances = Attendance.includes(:course, :users, :attendance_entries)
-                             .where(course_id: @record.id)
-                             .sort_by_date
+            @attendances = Attendance.sort_by_date(Attendance.find_by_course_id(@record.id))
         # student attendance index 
         elsif !params[:user_id].blank?
             # require ownership 
@@ -30,15 +26,12 @@ class AttendancesController < ApplicationController
             if current_user.role?('student') && @user != current_user
                 redirect_to user_path(current_user), notice: 'Sorry, you may only view your own attendance record.'
             end
-            @attendances = Attendance.includes(:course, :users, :attendance_entries)
-                             .where(users: { id: @record.id })
-                             .sort_by_date
+            @attendances = Attendance.sort_by_date(Attendance.find_by_user_id(@record.id))
         # all attendance index
         else  
             require_teacher
             @record = "All Courses"
-            @attendances = Attendance.includes(:course, :users, :attendance_entries)
-                            .sort_by_date
+            @attendances = Attendance.sort_by_date(Attendance.all)
         end 
     end 
 

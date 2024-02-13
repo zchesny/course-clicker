@@ -9,7 +9,7 @@ class Attendance < ApplicationRecord
     accepts_nested_attributes_for :attendance_entries, allow_destroy: true
 
     def get_users(status)
-        users.includes(:attendance_entries).where(attendance_entries: { status: status }).order(:name)
+        attendance_entries.select{|ae| ae.status == status}.map{|ae| ae.user}.compact.sort_by{|u| u.name}
     end
 
     def absentee_list
@@ -17,8 +17,8 @@ class Attendance < ApplicationRecord
     end 
     
     # filtering and sorting methods 
-    def self.sort_by_date
-        order(date: :desc)
+    def self.sort_by_date(attendances)
+        attendances.sort_by{|a| a.date}.reverse
     end 
 
     def self.find_by_course_id(course_id)
